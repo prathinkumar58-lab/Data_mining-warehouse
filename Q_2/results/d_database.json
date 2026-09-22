@@ -1,0 +1,297 @@
+{
+  "load": {
+    "notice_rows": 12000,
+    "sketch_rows": 12000,
+    "lsh_bucket_rows": 912000,
+    "copy_notice_seconds": 1.4,
+    "copy_sketch_seconds": 0.5,
+    "copy_bucket_seconds": 14.9,
+    "btree_noncovering_build_seconds": 0.55,
+    "hash_index_build_seconds": 1.42,
+    "gin_index_build_seconds": 1.96,
+    "relation_sizes": {
+      "notice": {
+        "total_bytes": 39698432,
+        "heap_bytes": 3145728,
+        "index_bytes": null
+      },
+      "notice_sketch": {
+        "total_bytes": 20381696,
+        "heap_bytes": 20054016,
+        "index_bytes": null
+      },
+      "lsh_bucket": {
+        "total_bytes": 96018432,
+        "heap_bytes": 48103424,
+        "index_bytes": 47865856
+      },
+      "lsh_bucket_nc": {
+        "total_bytes": 68567040,
+        "heap_bytes": 47587328,
+        "index_bytes": 20930560
+      },
+      "lsh_bucket_hash": {
+        "total_bytes": 79872000,
+        "heap_bytes": 47587328,
+        "index_bytes": 32235520
+      },
+      "notice_bands": {
+        "total_bytes": 41066496,
+        "heap_bytes": 8192000,
+        "index_bytes": 32546816
+      }
+    }
+  },
+  "access_paths_bulk": [
+    {
+      "node_type": "Index Only Scan",
+      "index": "lsh_bucket_pkey",
+      "actual_rows": 12.23,
+      "actual_loops": 43396,
+      "rows_removed_by_filter": 1,
+      "rows_removed_by_index_recheck": 0,
+      "heap_fetches": 0,
+      "node_shared_hit": 126991,
+      "node_shared_read": 5803,
+      "buffers_touched_whole_plan": 398382,
+      "execution_time_ms": 645.73,
+      "planning_time_ms": 0.377,
+      "total_rows_examined": 574129.0800000001,
+      "name": "A. composite B-tree (band_no,bucket_key,notice_id) COVERING",
+      "tag": "A",
+      "adopted": true,
+      "probe_rows": 43396,
+      "candidate_rows": 530538,
+      "seconds": 0.353,
+      "seconds_for_full_probe_set": 0.353,
+      "rows_examined_for_full_probe_set": 574129,
+      "measured_on_subset": false
+    },
+    {
+      "node_type": "Index Scan",
+      "index": "lsh_bucket_nc_idx",
+      "actual_rows": 12.23,
+      "actual_loops": 43396,
+      "rows_removed_by_filter": 1,
+      "rows_removed_by_index_recheck": 0,
+      "heap_fetches": null,
+      "node_shared_hit": 286896,
+      "node_shared_read": 8017,
+      "buffers_touched_whole_plan": 884739,
+      "execution_time_ms": 803.375,
+      "planning_time_ms": 0.223,
+      "total_rows_examined": 574129.0800000001,
+      "name": "B. same B-tree keys, NOT covering (notice_id in the heap)",
+      "tag": "B",
+      "adopted": false,
+      "probe_rows": 43396,
+      "candidate_rows": 530538,
+      "seconds": 0.395,
+      "seconds_for_full_probe_set": 0.395,
+      "rows_examined_for_full_probe_set": 574129,
+      "measured_on_subset": false
+    },
+    {
+      "node_type": "Index Scan",
+      "index": "lsh_bucket_hash_idx",
+      "actual_rows": 12.23,
+      "actual_loops": 43396,
+      "rows_removed_by_filter": 1,
+      "rows_removed_by_index_recheck": 0,
+      "heap_fetches": null,
+      "node_shared_hit": 219302,
+      "node_shared_read": 8792,
+      "buffers_touched_whole_plan": 684282,
+      "execution_time_ms": 737.449,
+      "planning_time_ms": 0.131,
+      "total_rows_examined": 574129.0800000001,
+      "name": "C. hash index on bucket_key (single column, equality only)",
+      "tag": "C",
+      "adopted": false,
+      "probe_rows": 43396,
+      "candidate_rows": 530538,
+      "seconds": 0.441,
+      "seconds_for_full_probe_set": 0.441,
+      "rows_examined_for_full_probe_set": 574129,
+      "measured_on_subset": false
+    },
+    {
+      "node_type": "Bitmap Heap Scan",
+      "index": "notice_bands_gin",
+      "actual_rows": 12.23,
+      "actual_loops": 43396,
+      "rows_removed_by_filter": 1,
+      "rows_removed_by_index_recheck": 0,
+      "heap_fetches": null,
+      "node_shared_hit": 485539,
+      "node_shared_read": 4998,
+      "buffers_touched_whole_plan": 1154658,
+      "execution_time_ms": 736.884,
+      "planning_time_ms": 0.516,
+      "total_rows_examined": 574129.0800000001,
+      "name": "D. GIN over BIGINT[] of the 76 band keys per notice",
+      "tag": "D",
+      "adopted": false,
+      "probe_rows": 43396,
+      "candidate_rows": 530538,
+      "seconds": 0.624,
+      "seconds_for_full_probe_set": 0.624,
+      "rows_examined_for_full_probe_set": 574129,
+      "measured_on_subset": false
+    },
+    {
+      "node_type": "Seq Scan",
+      "index": null,
+      "actual_rows": 912000.0,
+      "actual_loops": 1,
+      "rows_removed_by_filter": null,
+      "rows_removed_by_index_recheck": null,
+      "heap_fetches": null,
+      "node_shared_hit": 0,
+      "node_shared_read": 5872,
+      "buffers_touched_whole_plan": 17616,
+      "execution_time_ms": 846.927,
+      "planning_time_ms": 0.138,
+      "total_rows_examined": 912000.0,
+      "name": "E. no index at all -- sequential scan, forced",
+      "tag": "E",
+      "adopted": false,
+      "probe_rows": 43396,
+      "candidate_rows": 530538,
+      "seconds": 0.417,
+      "seconds_for_full_probe_set": 0.417,
+      "rows_examined_for_full_probe_set": 912000,
+      "measured_on_subset": false
+    }
+  ],
+  "access_paths_single_notice": [
+    {
+      "name": "A. composite B-tree (band_no,bucket_key,notice_id) COVERING",
+      "tag": "A",
+      "node_type": "Index Only Scan",
+      "rows_examined": 1283,
+      "buffers": 466,
+      "heap_fetches": 0,
+      "candidates": 1208,
+      "milliseconds": 0.468
+    },
+    {
+      "name": "B. same B-tree keys, NOT covering (notice_id in the heap)",
+      "tag": "B",
+      "node_type": "Index Scan",
+      "rows_examined": 1283,
+      "buffers": 1074,
+      "heap_fetches": null,
+      "candidates": 1208,
+      "milliseconds": 0.494
+    },
+    {
+      "name": "C. hash index on bucket_key (single column, equality only)",
+      "tag": "C",
+      "node_type": "Index Scan",
+      "rows_examined": 1283,
+      "buffers": 824,
+      "heap_fetches": null,
+      "candidates": 1208,
+      "milliseconds": 0.429
+    },
+    {
+      "name": "D. GIN over BIGINT[] of the 76 band keys per notice",
+      "tag": "D",
+      "node_type": "Bitmap Heap Scan",
+      "rows_examined": 1283,
+      "buffers": 2234,
+      "heap_fetches": null,
+      "candidates": 1208,
+      "milliseconds": 1.083
+    },
+    {
+      "name": "E. no index at all -- sequential scan, forced",
+      "tag": "E",
+      "node_type": "Seq Scan",
+      "rows_examined": 912000,
+      "buffers": 11744,
+      "heap_fetches": null,
+      "candidates": 1208,
+      "milliseconds": 80.297
+    }
+  ],
+  "access_paths_point": [
+    {
+      "path": "A. composite B-tree (band_no,bucket_key,notice_id) COVERING",
+      "tag": "A",
+      "probe_set": "random bucket",
+      "lookups": 2000,
+      "rows_returned": 22541,
+      "microseconds_per_lookup": 51.3,
+      "rows_per_lookup": 11.27
+    },
+    {
+      "path": "A. composite B-tree (band_no,bucket_key,notice_id) COVERING",
+      "tag": "A",
+      "probe_set": "200 largest buckets",
+      "lookups": 200,
+      "rows_returned": 28680,
+      "microseconds_per_lookup": 79.9,
+      "rows_per_lookup": 143.4
+    },
+    {
+      "path": "B. same B-tree keys, NOT covering (notice_id in the heap)",
+      "tag": "B",
+      "probe_set": "random bucket",
+      "lookups": 2000,
+      "rows_returned": 22541,
+      "microseconds_per_lookup": 77.7,
+      "rows_per_lookup": 11.27
+    },
+    {
+      "path": "B. same B-tree keys, NOT covering (notice_id in the heap)",
+      "tag": "B",
+      "probe_set": "200 largest buckets",
+      "lookups": 200,
+      "rows_returned": 28680,
+      "microseconds_per_lookup": 159.2,
+      "rows_per_lookup": 143.4
+    },
+    {
+      "path": "C. hash index on bucket_key (single column, equality only)",
+      "tag": "C",
+      "probe_set": "random bucket",
+      "lookups": 2000,
+      "rows_returned": 22541,
+      "microseconds_per_lookup": 98.9,
+      "rows_per_lookup": 11.27
+    },
+    {
+      "path": "C. hash index on bucket_key (single column, equality only)",
+      "tag": "C",
+      "probe_set": "200 largest buckets",
+      "lookups": 200,
+      "rows_returned": 28680,
+      "microseconds_per_lookup": 184.6,
+      "rows_per_lookup": 143.4
+    }
+  ],
+  "nightly_probe": {
+    "new_notices": 571,
+    "probe_rows": 43396,
+    "candidate_rows_emitted": 530538,
+    "distinct_candidate_pairs": 449468
+  },
+  "restart_check": {
+    "reconnected": true,
+    "index_meta": {
+      "k_rows": 384,
+      "bands": 76,
+      "rows_per_band": 5,
+      "variant": "canon",
+      "scheme": "w5",
+      "tau": 0.54
+    },
+    "lsh_bucket_rows_after_reconnect": 912000,
+    "sample_lookup_returned": 2,
+    "sample_lookup_ms": 8.393,
+    "note": "A new process, a new connection, no warm Python state: the bands are still on disk, index_meta says what they were built with, and the lookup still answers."
+  },
+  "elapsed_seconds": 64.2
+}

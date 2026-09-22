@@ -1,0 +1,70 @@
+[15:09:59] pre-registered: K_required=370.6 -> K_adopted=384
+[15:10:03] space: exact 3936 B/notice vs sketch 1536 B/notice (2.56x); time: exact 16.8 us/pair vs sketch 0.67 us/pair
+[15:10:03] computing exact Jaccard for the 900 labelled pairs ...
+[15:10:03] building the wide-coverage pair sample ...
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:08] generous LSH pass produced 7210543 candidate pairs for the error sample
+[15:11:10] computing exact Jaccard for 259857 sampled pairs ...
+[15:11:15]   4.7s
+[15:11:15] K= 24  labelled rmse 0.0779 (theory 0.0819) cov95 0.964 | sampled rmse 0.0824 (theory 0.0892) cov95 0.968
+[15:11:15] K= 48  labelled rmse 0.0526 (theory 0.0579) cov95 0.973 | sampled rmse 0.0592 (theory 0.0630) cov95 0.963
+[15:11:15] K= 96  labelled rmse 0.0388 (theory 0.0410) cov95 0.956 | sampled rmse 0.0417 (theory 0.0446) cov95 0.966
+[15:11:16] K=192  labelled rmse 0.0256 (theory 0.0290) cov95 0.964 | sampled rmse 0.0275 (theory 0.0315) cov95 0.976
+[15:11:16] K=384  labelled rmse 0.0181 (theory 0.0205) cov95 0.971 | sampled rmse 0.0187 (theory 0.0223) cov95 0.980
+[15:11:19] K=768  labelled rmse 0.0134 (theory 0.0145) cov95 0.967 | sampled rmse 0.0137 (theory 0.0158) cov95 0.976
+[15:11:19] 1/sqrt(K) law: fitted slope -0.5292 (theory -0.5)
+[15:11:21] stress-testing the requirement on high-J pairs ...
+[15:11:21] stress test: tight LSH gave 78449 candidates
+[15:11:23] running the variance-law diagnostics ...
+[15:11:25] wrote figures/b_rmse_vs_K.png
+[15:11:25] wrote figures/b_estimate_vs_truth.png
+[15:11:25] wrote figures/b_error_structure.png
+[15:11:25] wrote C:\Users\cbsen\Desktop\dmw\q2\results\b_sketch.json
+
+========================================================================================
+PART (b) SUMMARY   --   K fixed at 384 by argument, then measured
+========================================================================================
+requirement : P[J_hat < 0.46 | J >= 0.54] <= 1e-03
+derivation  : K >= z^2 tau(1-tau)/delta^2 = 370.6  ->  adopted K = 384
+predicted sd at the threshold: 0.0254   (3.09 sd = 0.0786 <= delta = 0.08)
+
+K        lab RMSE     theory     bias     cov95     smp RMSE     theory     bias     cov95
+24        0.07792    0.08191 -0.00735    0.9644      0.08243    0.08916  0.01078    0.9676
+48        0.05259    0.05792  0.00460    0.9733      0.05922    0.06305  0.01391    0.9626
+96        0.03877    0.04096 -0.01341    0.9556      0.04171    0.04458 -0.01407    0.9662
+192       0.02561    0.02896 -0.00678    0.9644      0.02749    0.03152 -0.00514    0.9760
+384       0.01813    0.02048 -0.00526    0.9711      0.01874    0.02229 -0.00125    0.9802
+768       0.01340    0.01448 -0.00438    0.9667      0.01371    0.01576 -0.00072    0.9763
+
+requirement check: 0/704 pairs with true J >= 0.54 fell below the filter  (rate 0.00000)
+mirror: 0 of 258088 pairs below the filter were lifted over tau by sketch noise
+stress test on oversampled high-J pairs: 0 losses in 13389 pairs with true J >= 0.54; 95% upper bound on the miss rate 2.24e-04
+
+error by true-J bucket:
+bucket                n  realised sd    theory sd    ratio
+[0.05,0.20)       12876      0.01586      0.01972    0.805
+[0.20,0.40)      242924      0.01882      0.02238    0.841
+[0.40,0.60)        3695      0.01929      0.02533    0.762
+[0.60,0.80)          48      0.02267      0.02380    0.953
+[0.80,0.95)         228      0.01401      0.01506    0.930
+[0.95,1.00)          86      0.00784      0.00829    0.946
+
+error by |A union B| (where the law is expected to strain):
+union size            n  realised sd    theory sd    ratio
+[200,400)           563      0.01844      0.02445    0.754
+[400,800)          8431      0.01801      0.02191    0.822
+[800,1600)        11006      0.01898      0.02241    0.847
+
+why the error sits BELOW the law:
+  monte-carlo with independent permutations, four real pairs:
+     J=0.2399 |AuB|= 667   MC sd 0.04239   theory 0.04358   ratio 0.973
+     J=0.9222 |AuB|= 617   MC sd 0.02610   theory 0.02734   ratio 0.955
+     J=0.8932 |AuB|= 487   MC sd 0.03254   theory 0.03152   ratio 1.032
+     J=0.3274 |AuB|= 446   MC sd 0.04677   theory 0.04789   ratio 0.977
+  split-half (384 vs 384 rows) dispersion ratio : 0.811
+  short-block (32 rows) dispersion ratio        : 1.015
+
+space : 3936 B/notice exact vs 1536 B/notice sketched (2.56x)
+time  : 16.8 us/pair exact vs 0.67 us/pair sketched (25x)
+elapsed 86.1s

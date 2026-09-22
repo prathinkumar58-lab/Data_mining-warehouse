@@ -1,0 +1,500 @@
+{
+  "distribution_before": {
+    "total_emissions": 5464739,
+    "colliding_buckets": 147944,
+    "largest_bucket": 1320,
+    "bucket_size_p50": 3.0,
+    "bucket_size_p99": 17.0,
+    "per_notice_mean": 910.8,
+    "per_notice_median": 709.0,
+    "per_notice_p99": 3057.01,
+    "per_notice_max": 4409,
+    "concentration_by_bucket": {
+      "top_0.1%_buckets": {
+        "buckets": 147,
+        "share_of_emissions": 0.7168
+      },
+      "top_0.5%_buckets": {
+        "buckets": 739,
+        "share_of_emissions": 0.8347
+      },
+      "top_1.0%_buckets": {
+        "buckets": 1479,
+        "share_of_emissions": 0.8658
+      },
+      "top_5.0%_buckets": {
+        "buckets": 7397,
+        "share_of_emissions": 0.9106
+      },
+      "top_10.0%_buckets": {
+        "buckets": 14794,
+        "share_of_emissions": 0.9321
+      }
+    },
+    "concentration_by_notice": {
+      "top_1%_notices": 0.0376,
+      "top_2%_notices": 0.0694,
+      "top_5%_notices": 0.1515,
+      "top_10%_notices": 0.2646
+    },
+    "finding": "The skew is at the BUCKET level, not the notice level. The worst 1% of notices carry only 3.8% of the work, which looks benign; the worst 0.1% of buckets carry 71.7% of it. Looking at per-notice cost would have hidden the problem entirely."
+  },
+  "portal_attribution": [
+    {
+      "portal_id": "P094",
+      "notices": 1426,
+      "mean_work": 984.007,
+      "total_work": 1403194,
+      "share_of_work": 0.1284,
+      "share_of_corpus": 0.1188
+    },
+    {
+      "portal_id": "P006",
+      "notices": 792,
+      "mean_work": 866.524,
+      "total_work": 686287,
+      "share_of_work": 0.0628,
+      "share_of_corpus": 0.066
+    },
+    {
+      "portal_id": "P002",
+      "notices": 800,
+      "mean_work": 808.1712,
+      "total_work": 646537,
+      "share_of_work": 0.0592,
+      "share_of_corpus": 0.0667
+    },
+    {
+      "portal_id": "P001",
+      "notices": 778,
+      "mean_work": 819.2005,
+      "total_work": 637338,
+      "share_of_work": 0.0583,
+      "share_of_corpus": 0.0648
+    },
+    {
+      "portal_id": "P003",
+      "notices": 772,
+      "mean_work": 813.9119,
+      "total_work": 628340,
+      "share_of_work": 0.0575,
+      "share_of_corpus": 0.0643
+    },
+    {
+      "portal_id": "P005",
+      "notices": 768,
+      "mean_work": 813.5781,
+      "total_work": 624828,
+      "share_of_work": 0.0572,
+      "share_of_corpus": 0.064
+    },
+    {
+      "portal_id": "P004",
+      "notices": 755,
+      "mean_work": 826.2583,
+      "total_work": 623825,
+      "share_of_work": 0.0571,
+      "share_of_corpus": 0.0629
+    },
+    {
+      "portal_id": "P020",
+      "notices": 384,
+      "mean_work": 1044.6042,
+      "total_work": 401128,
+      "share_of_work": 0.0367,
+      "share_of_corpus": 0.032
+    },
+    {
+      "portal_id": "P240",
+      "notices": 377,
+      "mean_work": 995.1485,
+      "total_work": 375171,
+      "share_of_work": 0.0343,
+      "share_of_corpus": 0.0314
+    },
+    {
+      "portal_id": "P044",
+      "notices": 224,
+      "mean_work": 964.6562,
+      "total_work": 216083,
+      "share_of_work": 0.0198,
+      "share_of_corpus": 0.0187
+    },
+    {
+      "portal_id": "P215",
+      "notices": 153,
+      "mean_work": 1053.6013,
+      "total_work": 161201,
+      "share_of_work": 0.0147,
+      "share_of_corpus": 0.0127
+    },
+    {
+      "portal_id": "P181",
+      "notices": 133,
+      "mean_work": 1004.2632,
+      "total_work": 133567,
+      "share_of_work": 0.0122,
+      "share_of_corpus": 0.0111
+    },
+    {
+      "portal_id": "P227",
+      "notices": 107,
+      "mean_work": 985.3832,
+      "total_work": 105436,
+      "share_of_work": 0.0096,
+      "share_of_corpus": 0.0089
+    },
+    {
+      "portal_id": "P088",
+      "notices": 97,
+      "mean_work": 1056.7629,
+      "total_work": 102506,
+      "share_of_work": 0.0094,
+      "share_of_corpus": 0.0081
+    },
+    {
+      "portal_id": "P013",
+      "notices": 110,
+      "mean_work": 899.7273,
+      "total_work": 98970,
+      "share_of_work": 0.0091,
+      "share_of_corpus": 0.0092
+    }
+  ],
+  "nodal_share": {
+    "share_of_corpus": 0.3887,
+    "share_of_work": 0.352,
+    "P094_share_of_corpus": 0.1188,
+    "P094_share_of_work": 0.1284
+  },
+  "worst_bucket": {
+    "band": 41,
+    "members": 1320,
+    "pairs_it_emits": 870540,
+    "share_of_all_emissions": 0.1593,
+    "portals": {
+      "P094": 178,
+      "P006": 89,
+      "P001": 80,
+      "P005": 79,
+      "P002": 77,
+      "P004": 72,
+      "P003": 67,
+      "P240": 52
+    },
+    "pairwise_J_mean": 0.2661,
+    "pairwise_J_p95": 0.3077,
+    "share_of_its_pairs_above_tau": 0.0019,
+    "estimated_real_duplicates_in_it": 1652
+  },
+  "shingle_df": {
+    "distinct_shingles": 306726,
+    "share_in_gt_1pct_of_notices": 0.007945,
+    "postings_in_gt_1pct": 0.7479,
+    "postings_in_gt_5pct": 0.7114,
+    "postings_in_gt_20pct": 0.4907,
+    "max_df": 1.0,
+    "mechanism": "A MinHash row is the minimum of a hash over the notice's shingle set. A shingle present in a large fraction of the corpus is a candidate for that minimum in every one of those notices at once, so whenever such a shingle happens to draw a small value under permutation i, thousands of notices get the SAME value in row i. A band is r=5 consecutive rows; if all five are won by corpus-wide shingles, every notice carrying them lands in one bucket. The bucket then emits n(n-1)/2 pairs -- quadratic in a quantity the tuning in part (c) never controlled, because the S-curve is a statement about ONE pair and says nothing about how many pairs share a bucket. 74.8% of all shingle postings sit in shingles that occur in more than 1% of notices; that tail is the fuel."
+  },
+  "budget_before": {
+    "sketch_microseconds_per_pair": 2.46,
+    "database_microseconds_per_candidate_row": 0.665,
+    "per_pair_microseconds_end_to_end": 3.125,
+    "exact_microseconds_per_pair": 16.37,
+    "full_corpus_emissions": 5464739,
+    "full_corpus_seconds": 17.1,
+    "nightly_emissions_estimate": 520060,
+    "nightly_seconds": 1.6,
+    "budget_seconds": 1200,
+    "worst_bucket_alone_seconds": 2.7,
+    "what_is_counted": "emitting the candidate row from the covering index (measured in part (d)) plus scoring it against the sketch. Exact verification is counted separately: only pairs above the sketch filter reach it."
+  },
+  "growth_projection": {
+    "rows": [
+      {
+        "corpus": 12000,
+        "all_pairs_baseline_hours": 0.33,
+        "lsh_uncapped_emissions": 5464739,
+        "lsh_uncapped_seconds": 17.1,
+        "lsh_capped_emissions": 1730345,
+        "lsh_capped_seconds": 5.4
+      },
+      {
+        "corpus": 25000,
+        "all_pairs_baseline_hours": 1.42,
+        "lsh_uncapped_emissions": 23718485,
+        "lsh_uncapped_seconds": 74.1,
+        "lsh_capped_emissions": 3604885,
+        "lsh_capped_seconds": 11.3
+      },
+      {
+        "corpus": 50000,
+        "all_pairs_baseline_hours": 5.68,
+        "lsh_uncapped_emissions": 94873940,
+        "lsh_uncapped_seconds": 296.5,
+        "lsh_capped_emissions": 7209770,
+        "lsh_capped_seconds": 22.5
+      },
+      {
+        "corpus": 100000,
+        "all_pairs_baseline_hours": 22.73,
+        "lsh_uncapped_emissions": 379495763,
+        "lsh_uncapped_seconds": 1186.0,
+        "lsh_capped_emissions": 14419541,
+        "lsh_capped_seconds": 45.1
+      },
+      {
+        "corpus": 220000,
+        "all_pairs_baseline_hours": 110.03,
+        "lsh_uncapped_emissions": 1836759497,
+        "lsh_uncapped_seconds": 5740.4,
+        "lsh_capped_emissions": 31722991,
+        "lsh_capped_seconds": 99.1
+      }
+    ],
+    "assumption": "uncapped emissions scale as N^2 (bucket membership is a fixed share of the corpus); capped emissions scale as N (each bucket is bounded at cap(cap-1)/2 and the number of buckets grows linearly). 220,000 is the corpus after four years at 4,000/week.",
+    "reading": "Today the uncapped scan costs 17 s of sketch scoring against a 1,200 s budget, so the skew is not yet fatal -- and saying otherwise would be dishonest. It is fatal on the board's timescale: it is the only term in the pipeline that grows quadratically, and it is what turned the old all-pairs job into 31 hours."
+  },
+  "baseline_quality": {
+    "auc": 0.98447,
+    "recall_at_zero_fp": 0.8029,
+    "tau": 0.5419,
+    "diff_max": 0.5367,
+    "diff_p99": 0.4514,
+    "resolution_needed": 0.0905,
+    "K_required_for_this_tau": 290,
+    "same_median": 0.9029,
+    "merged_share": 0.8029,
+    "unbiased_recall_above_tau": 0.999,
+    "unbiased_pairs_above_tau": 999
+  },
+  "mitigation_M2_bucket_cap": [
+    {
+      "cap": null,
+      "emissions": 5464739,
+      "largest_bucket": 1320,
+      "dropped_buckets": 0,
+      "dropped_memberships": 0,
+      "labelled_recall": 1.0,
+      "unbiased_recall": 0.999,
+      "per_notice_p99": 3057.01,
+      "per_notice_max": 4409
+    },
+    {
+      "cap": 400,
+      "emissions": 3106199,
+      "emissions_reduction": 0.4316,
+      "largest_bucket": 385,
+      "dropped_buckets": 9,
+      "dropped_memberships": 5843,
+      "labelled_recall": 1.0,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 0,
+      "unbiased_recall": 0.998,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 2,
+      "per_notice_p99": 1325.0100000000002,
+      "per_notice_max": 1911,
+      "seconds": 0.4
+    },
+    {
+      "cap": 200,
+      "emissions": 2410378,
+      "emissions_reduction": 0.5589,
+      "largest_bucket": 198,
+      "dropped_buckets": 29,
+      "dropped_memberships": 11058,
+      "labelled_recall": 1.0,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 0,
+      "unbiased_recall": 0.998,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 2,
+      "per_notice_p99": 942.0100000000002,
+      "per_notice_max": 1348,
+      "seconds": 0.4
+    },
+    {
+      "cap": 100,
+      "emissions": 1730345,
+      "emissions_reduction": 0.6834,
+      "largest_bucket": 100,
+      "dropped_buckets": 100,
+      "dropped_memberships": 20689,
+      "labelled_recall": 1.0,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 0,
+      "unbiased_recall": 0.996,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 4,
+      "per_notice_p99": 678.0100000000002,
+      "per_notice_max": 1026,
+      "seconds": 0.5
+    },
+    {
+      "cap": 50,
+      "emissions": 1170777,
+      "emissions_reduction": 0.7858,
+      "largest_bucket": 50,
+      "dropped_buckets": 339,
+      "dropped_memberships": 36882,
+      "labelled_recall": 1.0,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 0,
+      "unbiased_recall": 0.98498,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 15,
+      "per_notice_p99": 491.0,
+      "per_notice_max": 616,
+      "seconds": 0.4
+    },
+    {
+      "cap": 25,
+      "emissions": 860334,
+      "emissions_reduction": 0.8426,
+      "largest_bucket": 25,
+      "dropped_buckets": 864,
+      "dropped_memberships": 54852,
+      "labelled_recall": 0.99554,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 1,
+      "unbiased_recall": 0.97197,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 28,
+      "per_notice_p99": 423.0,
+      "per_notice_max": 532,
+      "seconds": 0.4
+    }
+  ],
+  "mitigation_M1_df_stoplist": [
+    {
+      "df_stop": null,
+      "mean_set_size": 492,
+      "emissions": 5464739,
+      "largest_bucket": 1320,
+      "auc": 0.98447,
+      "recall_at_zero_fp": 0.8029,
+      "tau": 0.5419,
+      "diff_max": 0.5367,
+      "diff_p99": 0.4514,
+      "resolution_needed": 0.0905,
+      "K_required_for_this_tau": 290,
+      "same_median": 0.9029,
+      "merged_share": 0.8029,
+      "unbiased_recall": 0.999
+    },
+    {
+      "df_stop": 0.2,
+      "mean_set_size": 251,
+      "emissions": 419595,
+      "emissions_reduction": 0.9232,
+      "largest_bucket": 49,
+      "per_notice_p99": 318.0,
+      "auc": 0.99856,
+      "recall_at_zero_fp": 0.8996,
+      "tau": 0.2532,
+      "diff_max": 0.2517,
+      "diff_p99": 0.1966,
+      "resolution_needed": 0.0566,
+      "K_required_for_this_tau": 564,
+      "same_median": 0.8235,
+      "merged_share": 0.8996,
+      "unbiased_recall": 0.70425,
+      "unbiased_pairs": 1295,
+      "seconds": 1.8
+    },
+    {
+      "df_stop": 0.1,
+      "mean_set_size": 202,
+      "emissions": 450917,
+      "emissions_reduction": 0.9175,
+      "largest_bucket": 123,
+      "per_notice_p99": 335.0,
+      "auc": 0.99595,
+      "recall_at_zero_fp": 0.8315,
+      "tau": 0.329,
+      "diff_max": 0.3069,
+      "diff_p99": 0.2326,
+      "resolution_needed": 0.0965,
+      "K_required_for_this_tau": 227,
+      "same_median": 0.8469,
+      "merged_share": 0.8315,
+      "unbiased_recall": 0.88347,
+      "unbiased_pairs": 1004,
+      "seconds": 1.2
+    },
+    {
+      "df_stop": 0.05,
+      "mean_set_size": 142,
+      "emissions": 384265,
+      "emissions_reduction": 0.9297,
+      "largest_bucket": 146,
+      "per_notice_p99": 298.0,
+      "auc": 0.99535,
+      "recall_at_zero_fp": 0.8208,
+      "tau": 0.355,
+      "diff_max": 0.3529,
+      "diff_p99": 0.2824,
+      "resolution_needed": 0.0727,
+      "K_required_for_this_tau": 414,
+      "same_median": 0.796,
+      "merged_share": 0.8208,
+      "unbiased_recall": 0.96158,
+      "unbiased_pairs": 885,
+      "seconds": 0.9
+    },
+    {
+      "df_stop": 0.02,
+      "mean_set_size": 133,
+      "emissions": 423496,
+      "emissions_reduction": 0.9225,
+      "largest_bucket": 9,
+      "per_notice_p99": 330.0,
+      "auc": 0.99998,
+      "recall_at_zero_fp": 0.9928,
+      "tau": 0.1081,
+      "diff_max": 0.1053,
+      "diff_p99": 0.0466,
+      "resolution_needed": 0.0615,
+      "K_required_for_this_tau": 244,
+      "same_median": 0.832,
+      "merged_share": 0.9928,
+      "unbiased_recall": 0.67484,
+      "unbiased_pairs": 1264,
+      "seconds": 0.9
+    }
+  ],
+  "adopted_mitigation": {
+    "what": "bucket cap at 100, applied at index time",
+    "why": "M1 (a document-frequency stop-list) attacks the cause and removes more work, but it changes the representation, which moves every Jaccard in the system: tau has to be re-derived and the labelled separation changes with it. M2 changes only which buckets are allowed to expand, so its price is a pure recall number and nothing else in the design has to move. Genuine duplicates collide in many bands at once (a pair at J=0.9 is expected to match 45 of the 76 bands), so refusing the few pathological buckets costs almost none of them.",
+    "detail": {
+      "cap": 100,
+      "emissions": 1730345,
+      "emissions_reduction": 0.6834,
+      "largest_bucket": 100,
+      "dropped_buckets": 100,
+      "dropped_memberships": 20689,
+      "labelled_recall": 1.0,
+      "labelled_dups_tested": 224,
+      "labelled_dups_lost": 0,
+      "unbiased_recall": 0.996,
+      "unbiased_pairs": 999,
+      "unbiased_lost": 4,
+      "per_notice_p99": 678.0100000000002,
+      "per_notice_max": 1026,
+      "seconds": 0.5
+    },
+    "price": "emissions fall 68.3% (5,464,739 -> 1,730,345) and the largest bucket falls from 1320 to 100; the measured cost is 0 of 224 labelled duplicates above tau and 4 of 999 unbiased pairs above tau."
+  },
+  "distribution_after": {
+    "total_emissions": 1730345,
+    "largest_bucket": 100,
+    "per_notice_mean": 288.4,
+    "per_notice_median": 270.0,
+    "per_notice_p99": 678.0100000000002,
+    "per_notice_max": 1026,
+    "nightly_seconds": 0.5,
+    "full_corpus_seconds": 5.4
+  },
+  "elapsed_seconds": 14.4
+}

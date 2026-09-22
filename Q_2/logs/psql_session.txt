@@ -1,0 +1,87 @@
+--- tables in the deduplication schema ---
+                 List of tables
+ Schema |        Name        | Type  |  Owner   
+--------+--------------------+-------+----------
+ public | index_meta         | table | postgres
+ public | lsh_bucket         | table | postgres
+ public | lsh_bucket_hash    | table | postgres
+ public | lsh_bucket_nc      | table | postgres
+ public | merge_decision     | table | postgres
+ public | notice             | table | postgres
+ public | notice_bands       | table | postgres
+ public | notice_opportunity | table | postgres
+ public | notice_sketch      | table | postgres
+ public | opportunity        | table | postgres
+ public | opportunity_alias  | table | postgres
+ public | suppressed_bucket  | table | postgres
+(12 rows)
+
+
+--- row counts and on-disk size ---
+       table        |     rows     | total_size 
+--------------------+--------------+------------
+ lsh_bucket         |      891,311 | 90 MB
+ notice             |       12,000 | 38 MB
+ notice_sketch      |       12,000 | 19 MB
+ notice_opportunity |       12,000 | 1664 kB
+ merge_decision     |        9,421 | 1208 kB
+ opportunity        |        6,920 | 864 kB
+ suppressed_bucket  |          100 | 64 kB
+ index_meta         |            1 | 32 kB
+ opportunity_alias  |          113 | 32 kB
+ notice_bands       |            0 | 16 kB
+(10 rows)
+
+
+--- what the index was built with (survives a restart) ---
+ k_rows | bands | rows_per_band | variant | scheme | tau  | tau_sketch 
+--------+-------+---------------+---------+--------+------+------------
+    384 |    76 |             5 | canon   | w5     | 0.54 |       0.46
+(1 row)
+
+
+--- the lookup the nightly job runs, on its access path ---
+                                                                              QUERY PLAN                                                                              
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Only Scan using lsh_bucket_pkey on lsh_bucket  (cost=1.43..9.45 rows=1 width=8) (actual time=0.097..0.098 rows=2.00 loops=1)
+   Index Cond: ((band_no = 12) AND (bucket_key = (InitPlan 1).col1))
+   Heap Fetches: 0
+   Index Searches: 1
+   Buffers: shared hit=11
+   InitPlan 1
+     ->  Limit  (cost=0.42..1.00 rows=1 width=8) (actual time=0.086..0.087 rows=1.00 loops=1)
+           Buffers: shared hit=7
+           ->  Index Only Scan using lsh_bucket_pkey on lsh_bucket lsh_bucket_1  (cost=0.42..6898.49 rows=11973 width=8) (actual time=0.085..0.085 rows=1.00 loops=1)
+                 Index Cond: (band_no = 12)
+                 Heap Fetches: 0
+                 Index Searches: 1
+                 Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=22
+ Planning Time: 1.205 ms
+ Execution Time: 0.120 ms
+(17 rows)
+
+
+--- a card, and the notices behind it ---
+ opportunity_id | member_count | portal_id |                        title                         
+----------------+--------------+-----------+------------------------------------------------------
+ OPP-N006101    |            9 | P229      | Widening and strengthening of the anganwadi centres 
+ OPP-N006101    |            9 | P098      | NIT for Widening and strengthening of the anganwadi 
+ OPP-N006101    |            9 | P228      | Tender Notice: Widening and strengthening of the ang
+ OPP-N006101    |            9 | P001      | NIT for Widening and strengthening of the anganwadi 
+ OPP-N006101    |            9 | P094      | Tender Notice: Corrigendum - Widening and strengthen
+ OPP-N006101    |            9 | P063      | E-TENDER - CORRIGENDUM - WIDENING AND STRENGTHENING 
+ OPP-N006101    |            9 | P012      | Widening and strengthening of the anganwadi centres 
+ OPP-N006101    |            9 | P005      | e-Tender - Widening and strengthening of the anganwa
+ OPP-N006101    |            9 | P030      | Tender Notice: Widening and strengthening of the ang
+(9 rows)
+
+
+--- merge decisions recorded tonight ---
+ decision | count | mean_exact_jaccard 
+----------+-------+--------------------
+ reject   |  7919 |             0.4873
+ merge    |  1502 |             0.6877
+(2 rows)
+

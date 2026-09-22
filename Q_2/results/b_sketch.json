@@ -1,0 +1,282 @@
+{
+  "derivation": {
+    "tau": 0.54,
+    "eps": 0.001,
+    "delta": 0.08,
+    "z": 3.0902,
+    "K_required": 370.6,
+    "K_adopted": 384,
+    "bytes_per_notice": 1536,
+    "predicted_sigma_at_tau": 0.02543,
+    "predicted_3.09_sigma": 0.0786
+  },
+  "sketch_build_seconds_K768_full_corpus": 0.0,
+  "space_and_time": {
+    "exact_shingle_postings_bytes": 47229632,
+    "exact_bytes_per_notice": 3936,
+    "sketch_bytes_per_notice": 1536,
+    "space_ratio": 2.56,
+    "exact_jaccard_microseconds_per_pair": 16.8,
+    "sketch_jaccard_microseconds_per_pair": 0.67,
+    "speed_ratio": 25.1,
+    "note": "The saving that matters is not only bytes. An exact set is variable-length (a 9,000-character notice carries three times the postings of a 1,500-character one) and cannot be banded; a signature is fixed-width, which is what makes both the LSH index and a BIGINT column possible."
+  },
+  "error_vs_K": [
+    {
+      "K": 24,
+      "labelled": {
+        "rmse": 0.07792,
+        "predicted_rmse": 0.08191,
+        "bias": -0.00735,
+        "max_abs": 0.291,
+        "coverage95": 0.9644
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.08243,
+        "predicted_rmse": 0.08916,
+        "bias": 0.01078,
+        "max_abs": 0.4426,
+        "coverage95": 0.9676
+      }
+    },
+    {
+      "K": 48,
+      "labelled": {
+        "rmse": 0.05259,
+        "predicted_rmse": 0.05792,
+        "bias": 0.0046,
+        "max_abs": 0.2276,
+        "coverage95": 0.9733
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.05922,
+        "predicted_rmse": 0.06305,
+        "bias": 0.01391,
+        "max_abs": 0.3169,
+        "coverage95": 0.9626
+      }
+    },
+    {
+      "K": 96,
+      "labelled": {
+        "rmse": 0.03877,
+        "predicted_rmse": 0.04096,
+        "bias": -0.01341,
+        "max_abs": 0.1315,
+        "coverage95": 0.9556
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.04171,
+        "predicted_rmse": 0.04458,
+        "bias": -0.01407,
+        "max_abs": 0.1796,
+        "coverage95": 0.9662
+      }
+    },
+    {
+      "K": 192,
+      "labelled": {
+        "rmse": 0.02561,
+        "predicted_rmse": 0.02896,
+        "bias": -0.00678,
+        "max_abs": 0.1096,
+        "coverage95": 0.9644
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.02749,
+        "predicted_rmse": 0.03152,
+        "bias": -0.00514,
+        "max_abs": 0.1351,
+        "coverage95": 0.976
+      }
+    },
+    {
+      "K": 384,
+      "labelled": {
+        "rmse": 0.01813,
+        "predicted_rmse": 0.02048,
+        "bias": -0.00526,
+        "max_abs": 0.0778,
+        "coverage95": 0.9711
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.01874,
+        "predicted_rmse": 0.02229,
+        "bias": -0.00125,
+        "max_abs": 0.0951,
+        "coverage95": 0.9802
+      }
+    },
+    {
+      "K": 768,
+      "labelled": {
+        "rmse": 0.0134,
+        "predicted_rmse": 0.01448,
+        "bias": -0.00438,
+        "max_abs": 0.0455,
+        "coverage95": 0.9667
+      },
+      "sampled": {
+        "n": 259857,
+        "rmse": 0.01371,
+        "predicted_rmse": 0.01576,
+        "bias": -0.00072,
+        "max_abs": 0.0701,
+        "coverage95": 0.9763
+      }
+    }
+  ],
+  "variance_law": {
+    "fitted_log_log_slope": -0.5292,
+    "theoretical_slope": -0.5,
+    "verdict": "matches"
+  },
+  "requirement_check": {
+    "requirement": "P[J_hat < tau-delta | J >= tau] <= 1e-3",
+    "labelled_pairs_with_J_ge_tau": 224,
+    "labelled_lost_by_sketch": 0,
+    "sampled_pairs_with_J_ge_tau": 480,
+    "sampled_lost_by_sketch": 0,
+    "realised_rate": 0.0,
+    "n_tested": 704,
+    "binomial_95pct_upper_if_zero": 0.004246,
+    "sampled_pairs_below_filter": 258088,
+    "sketch_lifted_over_tau": 0,
+    "note_on_lifted": "These would be extra exact verifications, not merges: the exact stage rejects them. They are the price of delta, and they are counted in (c)."
+  },
+  "error_by_true_J": [
+    {
+      "bucket": "[0.05,0.20)",
+      "n": 12876,
+      "realised_sd": 0.01586,
+      "predicted_sd": 0.01972,
+      "bias": -0.00385,
+      "ratio": 0.805
+    },
+    {
+      "bucket": "[0.20,0.40)",
+      "n": 242924,
+      "realised_sd": 0.01882,
+      "predicted_sd": 0.02238,
+      "bias": -0.00114,
+      "ratio": 0.841
+    },
+    {
+      "bucket": "[0.40,0.60)",
+      "n": 3695,
+      "realised_sd": 0.01929,
+      "predicted_sd": 0.02533,
+      "bias": 0.00057,
+      "ratio": 0.762
+    },
+    {
+      "bucket": "[0.60,0.80)",
+      "n": 48,
+      "realised_sd": 0.02267,
+      "predicted_sd": 0.0238,
+      "bias": -0.00237,
+      "ratio": 0.953
+    },
+    {
+      "bucket": "[0.80,0.95)",
+      "n": 228,
+      "realised_sd": 0.01401,
+      "predicted_sd": 0.01506,
+      "bias": -0.00116,
+      "ratio": 0.93
+    },
+    {
+      "bucket": "[0.95,1.00)",
+      "n": 86,
+      "realised_sd": 0.00784,
+      "predicted_sd": 0.00829,
+      "bias": -0.00054,
+      "ratio": 0.946
+    }
+  ],
+  "error_by_union_size": [
+    {
+      "union_size": "[200,400)",
+      "n": 563,
+      "realised_sd": 0.01844,
+      "predicted_sd": 0.02445,
+      "bias": -0.00348,
+      "ratio": 0.754
+    },
+    {
+      "union_size": "[400,800)",
+      "n": 8431,
+      "realised_sd": 0.01801,
+      "predicted_sd": 0.02191,
+      "bias": -0.00383,
+      "ratio": 0.822
+    },
+    {
+      "union_size": "[800,1600)",
+      "n": 11006,
+      "realised_sd": 0.01898,
+      "predicted_sd": 0.02241,
+      "bias": -0.00121,
+      "ratio": 0.847
+    }
+  ],
+  "requirement_stress_test": {
+    "n_pairs_with_true_J_ge_tau": 13389,
+    "lost_below_filter": 0,
+    "realised_rate": 0.0,
+    "binomial_95pct_upper_bound": 0.000224,
+    "worst_underestimate": -0.0757,
+    "verdict": "requirement of 1e-3 is met: with 13389 such pairs and 0 losses the 95% upper bound on the miss rate is 2.24e-04"
+  },
+  "variance_law_diagnostics": {
+    "monte_carlo_of_the_law": [
+      {
+        "J": 0.2399,
+        "union": 667,
+        "mc_sd": 0.04239,
+        "theory_sd": 0.04358,
+        "ratio": 0.973
+      },
+      {
+        "J": 0.9222,
+        "union": 617,
+        "mc_sd": 0.0261,
+        "theory_sd": 0.02734,
+        "ratio": 0.955
+      },
+      {
+        "J": 0.8932,
+        "union": 487,
+        "mc_sd": 0.03254,
+        "theory_sd": 0.03152,
+        "ratio": 1.032
+      },
+      {
+        "J": 0.3274,
+        "union": 446,
+        "mc_sd": 0.04677,
+        "theory_sd": 0.04789,
+        "ratio": 0.977
+      }
+    ],
+    "monte_carlo_verdict": "With genuinely independent permutations the binomial law is reproduced to within 5%, so the law is not what is wrong.",
+    "split_half": {
+      "sd_of_half_difference": 0.02555,
+      "expected_sqrt2_sigma": 0.03152,
+      "ratio": 0.811,
+      "corr_between_halves": 0.0694
+    },
+    "block_dispersion_32_rows": {
+      "realised": 0.006051,
+      "binomial": 0.005962,
+      "ratio": 1.015
+    },
+    "diagnosis": "The 1/sqrt(K) scaling holds (fitted slope reported separately). The MAGNITUDE is 8-15% below the binomial prediction at every K, on both the labelled pairs and the sampled pairs. A Monte-Carlo with truly independent permutations reproduces the binomial law, and dispersion measured over short 32-row blocks also matches it (ratio 1.01), while dispersion measured over 384-row halves does not (ratio 0.81). The reading is a weak long-range negative correlation between rows of the deterministic 64-bit family we ship -- the sketch is slightly MORE accurate than the sizing argument assumed. That is the safe direction to be wrong in, and K = 384 is retained: re-deriving K from the realised error would shrink it, and we would rather bank the margin than spend it."
+  },
+  "elapsed_seconds": 86.1
+}

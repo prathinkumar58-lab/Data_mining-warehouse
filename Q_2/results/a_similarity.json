@@ -1,0 +1,382 @@
+{
+  "label_skew": {
+    "n_pairs": 900,
+    "n_same": 279,
+    "n_different": 621,
+    "frac_same_in_labels": 0.31,
+    "corpus_total_pairs": 71994000,
+    "adjudicators": {
+      "ops3": 162,
+      "ops2": 157,
+      "ops1": 151,
+      "ops5": 150,
+      "ops4": 141,
+      "ops6": 139
+    },
+    "note": "The labelled set is 31% 'same'. The corpus cannot be: with 7.20e+07 possible pairs, even ten thousand true duplicate pairs would be a base rate near 1e-4. Conditional RATES (TPR, FPR) transfer from this sample; COUNTS and precision do not, and are re-weighted in part (c). The negatives are also 'hard': they were sent to a human precisely because something made them look alike, so FPR measured here is pessimistic relative to a random non-duplicate pair -- which is the safe direction to be wrong in, given the cost asymmetry."
+  },
+  "boilerplate": {
+    "portals_with_templates": 83,
+    "top_portals": [
+      [
+        "P002",
+        26
+      ],
+      [
+        "P001",
+        26
+      ],
+      [
+        "P005",
+        26
+      ],
+      [
+        "P004",
+        19
+      ],
+      [
+        "P006",
+        19
+      ],
+      [
+        "P003",
+        18
+      ],
+      [
+        "P112",
+        2
+      ],
+      [
+        "P136",
+        1
+      ],
+      [
+        "P227",
+        1
+      ],
+      [
+        "P215",
+        1
+      ]
+    ],
+    "learn_seconds": 3.34,
+    "rule": "a line repeating verbatim (case/punctuation-insensitive, digits kept) in >60%% of a portal's notices, for portals with >=20 notices, lines >=25 chars",
+    "removal_effect": [
+      {
+        "portal": "P002",
+        "mean_chars_before": 5786,
+        "mean_chars_after": 3675,
+        "removed_pct": 36.5
+      },
+      {
+        "portal": "P001",
+        "mean_chars_before": 5770,
+        "mean_chars_after": 3664,
+        "removed_pct": 36.5
+      },
+      {
+        "portal": "P005",
+        "mean_chars_before": 5715,
+        "mean_chars_after": 3603,
+        "removed_pct": 36.9
+      },
+      {
+        "portal": "P004",
+        "mean_chars_before": 4981,
+        "mean_chars_after": 3671,
+        "removed_pct": 26.3
+      },
+      {
+        "portal": "P006",
+        "mean_chars_before": 4984,
+        "mean_chars_after": 3691,
+        "removed_pct": 25.9
+      },
+      {
+        "portal": "P003",
+        "mean_chars_before": 4974,
+        "mean_chars_after": 3679,
+        "removed_pct": 26.0
+      },
+      {
+        "portal": "P112",
+        "mean_chars_before": 4455,
+        "mean_chars_after": 4391,
+        "removed_pct": 1.5
+      },
+      {
+        "portal": "P136",
+        "mean_chars_before": 4313,
+        "mean_chars_after": 4318,
+        "removed_pct": -0.1
+      }
+    ]
+  },
+  "configs": [
+    {
+      "variant": "raw",
+      "scheme": "w3",
+      "label": "everything kept, word 3-grams",
+      "mean_set_size": 684,
+      "build_seconds": 0.7,
+      "auc": 0.92066,
+      "same_p01": 0.2104,
+      "same_p05": 0.2445,
+      "same_median": 0.6232,
+      "diff_p99": 0.4875,
+      "diff_max": 0.5314,
+      "recall_at_zero_fp": 0.681,
+      "r0_ci95": [
+        0.6308,
+        0.7384
+      ],
+      "highest_different_pair": 0.5314,
+      "thr_cost50": 0.535,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.319
+    },
+    {
+      "variant": "raw",
+      "scheme": "w5",
+      "label": "everything kept, word 5-grams",
+      "mean_set_size": 736,
+      "build_seconds": 0.7,
+      "auc": 0.95752,
+      "same_p01": 0.19,
+      "same_p05": 0.222,
+      "same_median": 0.6045,
+      "diff_p99": 0.3897,
+      "diff_max": 0.4447,
+      "recall_at_zero_fp": 0.7312,
+      "r0_ci95": [
+        0.681,
+        0.7849
+      ],
+      "highest_different_pair": 0.4447,
+      "thr_cost50": 0.4451,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.26882
+    },
+    {
+      "variant": "raw",
+      "scheme": "c5",
+      "label": "everything kept, char 5-grams",
+      "mean_set_size": 2849,
+      "build_seconds": 0.9,
+      "auc": 0.84751,
+      "same_p01": 0.2959,
+      "same_p05": 0.3462,
+      "same_median": 0.6878,
+      "diff_p99": 0.6571,
+      "diff_max": 0.6872,
+      "recall_at_zero_fp": 0.5018,
+      "r0_ci95": [
+        0.4516,
+        0.5914
+      ],
+      "highest_different_pair": 0.6872,
+      "thr_cost50": 0.6878,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.49821
+    },
+    {
+      "variant": "mask",
+      "scheme": "w5",
+      "label": "boilerplate off, ALL numbers masked",
+      "mean_set_size": 482,
+      "build_seconds": 2.0,
+      "auc": 0.93712,
+      "same_p01": 0.2597,
+      "same_p05": 0.2955,
+      "same_median": 0.8306,
+      "diff_p99": 0.4563,
+      "diff_max": 0.5367,
+      "recall_at_zero_fp": 0.7706,
+      "r0_ci95": [
+        0.7276,
+        0.8351
+      ],
+      "highest_different_pair": 0.5367,
+      "thr_cost50": 0.5579,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.22939
+    },
+    {
+      "variant": "canon",
+      "scheme": "w3",
+      "label": "boilerplate off, money canonical, w3",
+      "mean_set_size": 449,
+      "build_seconds": 3.3,
+      "auc": 0.93665,
+      "same_p01": 0.2878,
+      "same_p05": 0.3275,
+      "same_median": 0.9204,
+      "diff_p99": 0.5271,
+      "diff_max": 0.6223,
+      "recall_at_zero_fp": 0.7634,
+      "r0_ci95": [
+        0.7168,
+        0.8315
+      ],
+      "highest_different_pair": 0.6223,
+      "thr_cost50": 0.6299,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.23656
+    },
+    {
+      "variant": "canon",
+      "scheme": "w5",
+      "label": "boilerplate off, money canonical, w5",
+      "mean_set_size": 487,
+      "build_seconds": 3.3,
+      "auc": 0.98447,
+      "same_p01": 0.2545,
+      "same_p05": 0.307,
+      "same_median": 0.9029,
+      "diff_p99": 0.4514,
+      "diff_max": 0.5367,
+      "recall_at_zero_fp": 0.8029,
+      "r0_ci95": [
+        0.7599,
+        0.8566
+      ],
+      "highest_different_pair": 0.5367,
+      "thr_cost50": 0.5419,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.19713
+    },
+    {
+      "variant": "canon",
+      "scheme": "w7",
+      "label": "boilerplate off, money canonical, w7",
+      "mean_set_size": 505,
+      "build_seconds": 3.3,
+      "auc": 0.99497,
+      "same_p01": 0.2371,
+      "same_p05": 0.2922,
+      "same_median": 0.8873,
+      "diff_p99": 0.402,
+      "diff_max": 0.4839,
+      "recall_at_zero_fp": 0.8172,
+      "r0_ci95": [
+        0.7742,
+        0.8746
+      ],
+      "highest_different_pair": 0.4839,
+      "thr_cost50": 0.491,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.1828
+    },
+    {
+      "variant": "canon",
+      "scheme": "w9",
+      "label": "boilerplate off, money canonical, w9",
+      "mean_set_size": 520,
+      "build_seconds": 3.3,
+      "auc": 0.99625,
+      "same_p01": 0.2243,
+      "same_p05": 0.278,
+      "same_median": 0.8715,
+      "diff_p99": 0.3546,
+      "diff_max": 0.4286,
+      "recall_at_zero_fp": 0.8387,
+      "r0_ci95": [
+        0.7993,
+        0.8996
+      ],
+      "highest_different_pair": 0.4286,
+      "thr_cost50": 0.433,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.16129
+    },
+    {
+      "variant": "canon",
+      "scheme": "c5",
+      "label": "boilerplate off, money canonical, c5",
+      "mean_set_size": 2064,
+      "build_seconds": 3.4,
+      "auc": 0.86789,
+      "same_p01": 0.3895,
+      "same_p05": 0.4324,
+      "same_median": 0.9373,
+      "diff_p99": 0.7003,
+      "diff_max": 0.7265,
+      "recall_at_zero_fp": 0.7348,
+      "r0_ci95": [
+        0.6846,
+        0.7921
+      ],
+      "highest_different_pair": 0.7265,
+      "thr_cost50": 0.7268,
+      "fpr_at_thr": 0.0,
+      "fnr_at_thr": 0.26523
+    }
+  ],
+  "adopted": {
+    "variant": "canon",
+    "scheme": "w5",
+    "score": "exact Jaccard of the two shingle sets"
+  },
+  "granularity_paired_test": {
+    "mean_shift_same_pairs_w5_to_w9": -0.0235,
+    "mean_shift_diff_pairs_w5_to_w9": -0.1017,
+    "reading": "Going from 5-grams to 9-grams pushes different-pairs down four times as far as same-pairs, so 9-grams genuinely separate better. But the bootstrap intervals on recall-at-zero-false-merges overlap, and 9-grams also drag the true-duplicate median down (0.903 -> 0.871). Every point of true-duplicate similarity lost has to be bought back with more LSH bands, and part (e) shows candidate volume -- not scoring -- is what threatens the 20-minute budget."
+  },
+  "walkthrough": {
+    "same_pair": {
+      "notice_a": "N009205",
+      "notice_b": "N009208",
+      "label": "same",
+      "portal_a": "P005",
+      "portal_b": "P004",
+      "title_a": "Widening and strengthening of the irrigation canal from Baran to Barabanki",
+      "title_b": "Widening and strengthening of the irrigation canal from Baran to Barabanki [SPC/2024-25/031782]",
+      "value_a": 6340000,
+      "value_b": 6340000,
+      "body_len_a": 5039,
+      "body_len_b": 4216,
+      "J_raw_w5": 0.3792,
+      "J_canon_w5": 0.899,
+      "J_mask_w5": 0.8027,
+      "J_raw_c5": 0.5296,
+      "J_canon_c5": 0.956,
+      "J_canon_w9": 0.8517
+    },
+    "different_pair": {
+      "notice_a": "N009445",
+      "notice_b": "N009562",
+      "label": "different",
+      "portal_a": "P001",
+      "portal_b": "P002",
+      "title_a": "Repair and renovation of the government higher secondary school building at Chandrapur",
+      "title_b": "Desilting and lining of the 2 MLD sewage treatment plant at Chandrapur",
+      "value_a": 163300000,
+      "value_b": 35880000,
+      "body_len_a": 4663,
+      "body_len_b": 5051,
+      "J_raw_w5": 0.4447,
+      "J_canon_w5": 0.3078,
+      "J_mask_w5": 0.4226,
+      "J_raw_c5": 0.6748,
+      "J_canon_c5": 0.6156,
+      "J_canon_w9": 0.1698
+    }
+  },
+  "decision_evidence": {
+    "decision_2_signal_vs_noise": {
+      "same_mean_raw": 0.6223,
+      "same_mean_mask": 0.7435,
+      "same_mean_canon": 0.7841,
+      "diff_mean_raw": 0.1771,
+      "diff_mean_canon": 0.2441,
+      "same_pairs_lifted_by_canon": 220,
+      "same_pairs_hurt_by_canon": 10
+    },
+    "decision_1_granularity": {
+      "word5_auc": 0.98447,
+      "char5_auc": 0.86789,
+      "char5_set_size_multiple": 4.24
+    }
+  },
+  "elapsed_seconds": 27.7
+}

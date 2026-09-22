@@ -1,0 +1,64 @@
+[15:13:01] base corpus 10287 notices; 3 nights of 571
+[15:13:22] shingled 10287 notices [canon/w5] mean |S|=491 in 20.4s
+[15:13:48] minhash K=384 for 10287 notices in 25.4s
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:14:03] cold build done; suppressed 100 oversized buckets (17657 memberships)
+[15:14:10] cold build: 839,295 candidate pairs -> 12,906 merges -> 5,489 opportunities in 68.6 s
+[15:14:12] shingled 571 notices [canon/w5] mean |S|=500 in 1.1s
+[15:14:13] minhash K=384 for 571 notices in 1.4s
+[15:14:15] night 1: 571 new, 90,772 candidates, 2691 verified, 417 merges, 4.4 s (0.4% of the 20-minute budget)
+[15:14:16] shingled 571 notices [canon/w5] mean |S|=499 in 1.2s
+[15:14:17] minhash K=384 for 571 notices in 1.4s
+[15:14:20] night 2: 571 new, 95,211 candidates, 3183 verified, 553 merges, 4.9 s (0.4% of the 20-minute budget)
+[15:14:21] shingled 571 notices [canon/w5] mean |S|=496 in 1.2s
+[15:14:22] minhash K=384 for 571 notices in 1.5s
+[15:14:25] night 3: 571 new, 99,234 candidates, 3547 verified, 532 merges, 4.9 s (0.4% of the 20-minute budget)
+[15:14:25] bookmarks: 5000 unchanged, 0 via alias, 0 broken
+[15:14:25] wrote figures/f_nightly.png
+[15:14:25] wrote C:\Users\cbsen\Desktop\dmw\q2\results\f_nightly.json
+
+================================================================================================
+NIGHTLY PIPELINE -- the whole system against the clock
+================================================================================================
+cold build on 10,287 notices: 68.6 s total
+    cold: shingle                   20.44 s
+    cold: minhash                   25.44 s
+    cold: band                       0.06 s
+    cold: load notice+sketch         1.90 s
+    cold: load buckets              12.84 s
+    cold: apply bucket cap           0.54 s
+    cold: cluster base corpus        6.95 s
+    cold: persist clusters           0.39 s
+    suppressed 100 oversized buckets (17,657 memberships) at cap 100
+
+nights:
+ night      new     candidates     verified     merges    seconds  % of budget
+------------------------------------------------------------------------------
+     1      571         90,772         2691        417        4.4        0.37%
+     2      571         95,211         3183        553        4.9        0.41%
+     3      571         99,234         3547        532        4.9        0.41%
+
+  stage breakdown, last night:
+    1 sketch                             2.64 s
+    2 insert notices and sketches        0.12 s
+    3 probe the index                    0.79 s
+    4 sketch filter                      0.40 s
+    5 exact verification                 0.03 s
+    6 assign opportunities               0.05 s
+    7 persist decisions and clusters     0.04 s
+    8 index the new notices              0.82 s
+
+bookmark stability over 3 nights: 5000 unchanged, 0 resolved through an alias, 0 broken (of 5000 ids issued)
+
+end-to-end on the adjudicated pairs (final clusters, transitivity included):
+linkage policy                      duplicates kept       FALSE MERGES    opportunities    biggest
+--------------------------------------------------------------------------------------------------
+single linkage (transitive closure)       194 / 279           19 / 621              6500        575
+leader linkage (canonical check)         191 / 279            1 / 621              6689         18
+complete linkage (all members)  <=       190 / 279            0 / 621              6807          9
+
+  Pairwise, tau = 0.54 puts ZERO of the 621 adjudicated 'different' pairs above the line. Closing the merge relation transitively puts 19 of them into one card anyway (3.06%) and grows a runaway cluster of 575 notices: similarity is not transitive and single linkage does not care. Anchoring every member to the card's canonical notice cuts that to 1 (0.161%) but still allows a star of radius tau, which is where the last one comes from. Requiring the new notice to clear tau against EVERY existing member takes false merges to 0 and caps the largest card at 9. The price is recall: 190 of 279 adjudicated duplicates end up on one card, against 194 under single linkage. Under a 50:1 ratio that is the trade the ratio exists to make.
+
+cards: 12,000 notices -> 6,807 opportunities (43.3% fewer cards), largest cluster 9
+elapsed 87.4s

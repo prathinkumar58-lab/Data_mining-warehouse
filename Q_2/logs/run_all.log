@@ -1,0 +1,460 @@
+
+==============================================================================
+RUNNING s01_similarity.py  --  part (a): what 'similar' means
+==============================================================================
+[15:09:30] corpus 12000 notices / 260 portals; labels 900 rows
+[15:09:30] labelled pairs touch 1644 distinct notices
+[15:09:35] shingled 1644 notices [raw/w3] mean |S|=684 in 0.7s
+[15:09:35] raw/w3     AUC=0.9207 R@FP0=0.681 [0.631,0.738] |S|= 684  0.7s
+[15:09:36] shingled 1644 notices [raw/w5] mean |S|=736 in 0.7s
+[15:09:36] raw/w5     AUC=0.9575 R@FP0=0.731 [0.681,0.785] |S|= 735  0.7s
+[15:09:37] shingled 1644 notices [raw/c5] mean |S|=2849 in 0.9s
+[15:09:37] raw/c5     AUC=0.8475 R@FP0=0.502 [0.452,0.591] |S|=2848  0.9s
+[15:09:39] shingled 1644 notices [mask/w5] mean |S|=482 in 2.0s
+[15:09:39] mask/w5    AUC=0.9371 R@FP0=0.771 [0.728,0.835] |S|= 481  2.0s
+[15:09:42] shingled 1644 notices [canon/w3] mean |S|=449 in 3.3s
+[15:09:42] canon/w3   AUC=0.9367 R@FP0=0.763 [0.717,0.832] |S|= 449  3.3s
+[15:09:45] shingled 1644 notices [canon/w5] mean |S|=487 in 3.3s
+[15:09:45] canon/w5   AUC=0.9845 R@FP0=0.803 [0.760,0.857] |S|= 486  3.3s
+[15:09:49] shingled 1644 notices [canon/w7] mean |S|=505 in 3.3s
+[15:09:49] canon/w7   AUC=0.9950 R@FP0=0.817 [0.774,0.875] |S|= 504  3.3s
+[15:09:52] shingled 1644 notices [canon/w9] mean |S|=520 in 3.3s
+[15:09:52] canon/w9   AUC=0.9963 R@FP0=0.839 [0.799,0.900] |S|= 520  3.3s
+[15:09:55] shingled 1644 notices [canon/c5] mean |S|=2064 in 3.4s
+[15:09:56] canon/c5   AUC=0.8679 R@FP0=0.735 [0.685,0.792] |S|=2064  3.4s
+[15:09:57] wrote figures/a_score_distributions.png
+[15:09:57] wrote figures/a_separation.png
+[15:09:58] wrote figures/a_granularity_tradeoff.png
+[15:09:58] wrote C:\Users\cbsen\Desktop\dmw\q2\results\a_similarity.json
+
+============================================================================================
+PART (a) SUMMARY   --   similarity = exact Jaccard over shingle sets
+============================================================================================
+labelled set: 279 same / 621 different (31% same) against 7.20e+07 possible corpus pairs
+boilerplate rule fired on 83 portals; on the nodal aggregators it removes:
+    P002  5786 -> 3675 chars  (-36%)
+    P001  5770 -> 3664 chars  (-36%)
+    P005  5715 -> 3603 chars  (-37%)
+    P004  4981 -> 3671 chars  (-26%)
+    P006  4984 -> 3691 chars  (-26%)
+    P003  4974 -> 3679 chars  (-26%)
+
+config     what it does                       mean|S|      AUC   R@FP0   R@FP0 95% CI
+-------------------------------------------------------------------------------------
+raw/w3     everything kept, word 3-grams          684   0.9207   0.681  [0.631, 0.738]
+raw/w5     everything kept, word 5-grams          736   0.9575   0.731  [0.681, 0.785]
+raw/c5     everything kept, char 5-grams         2849   0.8475   0.502  [0.452, 0.591]
+mask/w5    boilerplate off, ALL numbers maske     482   0.9371   0.771  [0.728, 0.835]
+canon/w3   boilerplate off, money canonical,      449   0.9366   0.763  [0.717, 0.832]
+canon/w5   boilerplate off, money canonical,      487   0.9845   0.803  [0.760, 0.857]  <== ADOPTED
+canon/w7   boilerplate off, money canonical,      505   0.9950   0.817  [0.774, 0.875]
+canon/w9   boilerplate off, money canonical,      520   0.9962   0.839  [0.799, 0.900]
+canon/c5   boilerplate off, money canonical,     2064   0.8679   0.735  [0.685, 0.792]
+
+SAME pair  N009205 (P005) / N009208 (P004)
+    title A: Widening and strengthening of the irrigation canal from Baran to Barabanki
+    title B: Widening and strengthening of the irrigation canal from Baran to Barabanki [SPC/2024-25/031782]
+    value  : 6340000 / 6340000      body chars: 5039 / 4216
+    J(raw,w5)=0.379   J(mask,w5)=0.803   J(canon,w5)=0.899   J(raw,c5)=0.530   J(canon,c5)=0.956
+DIFFERENT pair  N009445 (P001) / N009562 (P002)
+    title A: Repair and renovation of the government higher secondary school building at Chandrapur
+    title B: Desilting and lining of the 2 MLD sewage treatment plant at Chandrapur
+    value  : 163300000 / 35880000      body chars: 4663 / 5051
+    J(raw,w5)=0.445   J(mask,w5)=0.423   J(canon,w5)=0.308   J(raw,c5)=0.675   J(canon,c5)=0.616
+
+elapsed 27.7s
+
+==============================================================================
+RUNNING s02_sketch_size.py  --  part (b): the size of the reduced form
+==============================================================================
+[15:09:59] pre-registered: K_required=370.6 -> K_adopted=384
+[15:10:03] space: exact 3936 B/notice vs sketch 1536 B/notice (2.56x); time: exact 16.8 us/pair vs sketch 0.67 us/pair
+[15:10:03] computing exact Jaccard for the 900 labelled pairs ...
+[15:10:03] building the wide-coverage pair sample ...
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:08] generous LSH pass produced 7210543 candidate pairs for the error sample
+[15:11:10] computing exact Jaccard for 259857 sampled pairs ...
+[15:11:15]   4.7s
+[15:11:15] K= 24  labelled rmse 0.0779 (theory 0.0819) cov95 0.964 | sampled rmse 0.0824 (theory 0.0892) cov95 0.968
+[15:11:15] K= 48  labelled rmse 0.0526 (theory 0.0579) cov95 0.973 | sampled rmse 0.0592 (theory 0.0630) cov95 0.963
+[15:11:15] K= 96  labelled rmse 0.0388 (theory 0.0410) cov95 0.956 | sampled rmse 0.0417 (theory 0.0446) cov95 0.966
+[15:11:16] K=192  labelled rmse 0.0256 (theory 0.0290) cov95 0.964 | sampled rmse 0.0275 (theory 0.0315) cov95 0.976
+[15:11:16] K=384  labelled rmse 0.0181 (theory 0.0205) cov95 0.971 | sampled rmse 0.0187 (theory 0.0223) cov95 0.980
+[15:11:19] K=768  labelled rmse 0.0134 (theory 0.0145) cov95 0.967 | sampled rmse 0.0137 (theory 0.0158) cov95 0.976
+[15:11:19] 1/sqrt(K) law: fitted slope -0.5292 (theory -0.5)
+[15:11:21] stress-testing the requirement on high-J pairs ...
+[15:11:21] stress test: tight LSH gave 78449 candidates
+[15:11:23] running the variance-law diagnostics ...
+[15:11:25] wrote figures/b_rmse_vs_K.png
+[15:11:25] wrote figures/b_estimate_vs_truth.png
+[15:11:25] wrote figures/b_error_structure.png
+[15:11:25] wrote C:\Users\cbsen\Desktop\dmw\q2\results\b_sketch.json
+
+========================================================================================
+PART (b) SUMMARY   --   K fixed at 384 by argument, then measured
+========================================================================================
+requirement : P[J_hat < 0.46 | J >= 0.54] <= 1e-03
+derivation  : K >= z^2 tau(1-tau)/delta^2 = 370.6  ->  adopted K = 384
+predicted sd at the threshold: 0.0254   (3.09 sd = 0.0786 <= delta = 0.08)
+
+K        lab RMSE     theory     bias     cov95     smp RMSE     theory     bias     cov95
+24        0.07792    0.08191 -0.00735    0.9644      0.08243    0.08916  0.01078    0.9676
+48        0.05259    0.05792  0.00460    0.9733      0.05922    0.06305  0.01391    0.9626
+96        0.03877    0.04096 -0.01341    0.9556      0.04171    0.04458 -0.01407    0.9662
+192       0.02561    0.02896 -0.00678    0.9644      0.02749    0.03152 -0.00514    0.9760
+384       0.01813    0.02048 -0.00526    0.9711      0.01874    0.02229 -0.00125    0.9802
+768       0.01340    0.01448 -0.00438    0.9667      0.01371    0.01576 -0.00072    0.9763
+
+requirement check: 0/704 pairs with true J >= 0.54 fell below the filter  (rate 0.00000)
+mirror: 0 of 258088 pairs below the filter were lifted over tau by sketch noise
+stress test on oversampled high-J pairs: 0 losses in 13389 pairs with true J >= 0.54; 95% upper bound on the miss rate 2.24e-04
+
+error by true-J bucket:
+bucket                n  realised sd    theory sd    ratio
+[0.05,0.20)       12876      0.01586      0.01972    0.805
+[0.20,0.40)      242924      0.01882      0.02238    0.841
+[0.40,0.60)        3695      0.01929      0.02533    0.762
+[0.60,0.80)          48      0.02267      0.02380    0.953
+[0.80,0.95)         228      0.01401      0.01506    0.930
+[0.95,1.00)          86      0.00784      0.00829    0.946
+
+error by |A union B| (where the law is expected to strain):
+union size            n  realised sd    theory sd    ratio
+[200,400)           563      0.01844      0.02445    0.754
+[400,800)          8431      0.01801      0.02191    0.822
+[800,1600)        11006      0.01898      0.02241    0.847
+
+why the error sits BELOW the law:
+  monte-carlo with independent permutations, four real pairs:
+     J=0.2399 |AuB|= 667   MC sd 0.04239   theory 0.04358   ratio 0.973
+     J=0.9222 |AuB|= 617   MC sd 0.02610   theory 0.02734   ratio 0.955
+     J=0.8932 |AuB|= 487   MC sd 0.03254   theory 0.03152   ratio 1.032
+     J=0.3274 |AuB|= 446   MC sd 0.04677   theory 0.04789   ratio 0.977
+  split-half (384 vs 384 rows) dispersion ratio : 0.811
+  short-block (32 rows) dispersion ratio        : 1.015
+
+space : 3936 B/notice exact vs 1536 B/notice sketched (2.56x)
+time  : 16.8 us/pair exact vs 0.67 us/pair sketched (25x)
+elapsed 86.1s
+
+==============================================================================
+RUNNING s03_lsh_tuning.py  --  part (c): sublinear retrieval, risk priced
+==============================================================================
+[15:11:31] unbiased anchor sample: 400 anchors x 12000 notices = 4799600 pairs
+[15:11:31] R=50 -> tau=0.5419, FNR on true duplicates 0.197
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:31] b=128 r= 3 t=0.198 recall(J>=tau, unbiased)=1.0000 (981/981)  recall(labelled)=1.0000  emissions=133,429,817  max bucket=5507
+[15:11:32] b= 96 r= 4 t=0.319 recall(J>=tau, unbiased)=1.0000 (981/981)  recall(labelled)=1.0000  emissions=26,285,248  max bucket=3576
+[15:11:32] b= 76 r= 5 t=0.421 recall(J>=tau, unbiased)=0.9990 (980/981)  recall(labelled)=1.0000  emissions=5,464,739  max bucket=1320
+[15:11:32] b= 64 r= 6 t=0.500 recall(J>=tau, unbiased)=0.9796 (961/981)  recall(labelled)=0.9865  emissions=2,583,905  max bucket=1231
+[15:11:33] b= 54 r= 7 t=0.566 recall(J>=tau, unbiased)=0.9337 (916/981)  recall(labelled)=0.9686  emissions=1,075,921  max bucket=955
+[15:11:33] b= 48 r= 8 t=0.616 recall(J>=tau, unbiased)=0.8756 (859/981)  recall(labelled)=0.9641  emissions=351,204  max bucket=138
+[15:11:33] b= 42 r= 9 t=0.660 recall(J>=tau, unbiased)=0.8267 (811/981)  recall(labelled)=0.9462  emissions=269,661  max bucket=203
+[15:11:33] b= 38 r=10 t=0.695 recall(J>=tau, unbiased)=0.8145 (799/981)  recall(labelled)=0.9283  emissions=204,435  max bucket=58
+[15:11:33] b= 32 r=12 t=0.749 recall(J>=tau, unbiased)=0.7829 (768/981)  recall(labelled)=0.8969  emissions=145,274  max bucket=9
+[15:11:34] b= 24 r=16 t=0.820 recall(J>=tau, unbiased)=0.7360 (722/981)  recall(labelled)=0.8655  emissions=85,827  max bucket=9
+[15:11:34] operating point: b=76 r=5
+[15:11:34] wrote figures/c_s_curves.png
+[15:11:35] wrote figures/c_recall_vs_work.png
+[15:11:35] wrote figures/c_cost_ratio.png
+[15:11:35] wrote figures/c_candidate_lengths.png
+[15:11:35] wrote C:\Users\cbsen\Desktop\dmw\q2\results\c_lsh.json
+
+================================================================================================
+PART (c) SUMMARY
+================================================================================================
+Where the 50:1 asymmetry enters -- the merge threshold:
+       R      tau  FPR on hard negatives   true duplicates merged
+       1   0.3069                0.05636                    95.3%
+       5   0.4675                0.00483                    82.8%
+      10   0.5419                0.00000                    80.3%
+      50   0.5419                0.00000                    80.3%  <== adopted
+     200   0.5419                0.00000                    80.3%
+    1000   0.5419                0.00000                    80.3%
+
+Saturation: tau stops moving above R = 10 (highest adjudicated 'different' pair = 0.5367).
+  review band [0.468, 0.542): ~26,370 pairs corpus-wide, ~2511 per night's intake -- too many for a human
+  band that fits a 200-pair/night adjudication budget: [0.527, 0.542) = 162/night
+
+Candidate stage -- recall against work (full corpus, 12,000 notices):
+   b   r   thresh P[cand|tau] recall(J>=tau)     labelled        emissions  max bucket
+--------------------------------------------------------------------------------------
+ 128   3    0.198     1.0000        1.00000       1.0000      133,429,817        5507
+  96   4    0.320     0.9998        1.00000       1.0000       26,285,248        3576
+  76   5    0.421     0.9737        0.99898       1.0000        5,464,739        1320 <==
+  64   6    0.500     0.8063        0.97961       0.9865        2,583,905        1231
+  54   7    0.566     0.5258        0.93374       0.9686        1,075,921         955
+  48   8    0.616     0.3011        0.87564       0.9641          351,204         138
+  42   9    0.660     0.1560        0.82671       0.9462          269,661         203
+  38  10    0.695     0.0797        0.81448       0.9283          204,435          58
+  32  12    0.749     0.0203        0.78287       0.8969          145,274           9
+  24  16    0.820     0.0013        0.73598       0.8655           85,827           9
+
+candidate rows per notice at the operating point: mean 911  median 709  p90 1887  p99 3057  max 4409
+(the gap between the median and the max is what part (e) is about)
+
+realised vs theoretical S-curve at b=76 r=5:
+       J      pairs  retrieved   realised     theory
+   0.125      31119         56    0.00180    0.00232
+   0.175     673502       5651    0.00839    0.01240
+   0.225    2192540      79186    0.03612    0.04289
+   0.275    1758354     188522    0.10722    0.11275
+   0.325     133147      31582    0.23720    0.24124
+   0.375       3842       1417    0.36882    0.43204
+   0.425       3669       1994    0.54347    0.65395
+   0.475       1854       1433    0.77292    0.84438
+   0.525        633        598    0.94471    0.95465
+   0.575        139        139    1.00000    0.99280
+   0.675         25         25    1.00000    0.99999
+   0.825         39         39    1.00000    1.00000
+   0.875        151        151    1.00000    1.00000
+   0.925        332        332    1.00000    1.00000
+   0.975        209        209    1.00000    1.00000
+
+elapsed 8.4s
+
+==============================================================================
+RUNNING s04_database.py  --  part (d): schema and access path
+==============================================================================
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:40] band keys: 12000 notices x 76 bands
+[15:11:41] schema created
+[15:12:09] loaded and analysed
+[15:12:09] lsh_bucket: 912,000 rows, heap 48.1 MB, index 47.9 MB
+[15:12:09] probe set: 43396 rows (571 new notices x 76 bands)
+[15:12:10] A. composite B-tree (band_no,bucket_key,notice_id) COVER      0.35 s  rows examined        574,129  heap fetches 0        buffers 398,382
+[15:12:12] B. same B-tree keys, NOT covering (notice_id in the heap      0.40 s  rows examined        574,129  heap fetches None     buffers 884,739
+[15:12:14] C. hash index on bucket_key (single column, equality onl      0.44 s  rows examined        574,129  heap fetches None     buffers 684,282
+[15:12:16] D. GIN over BIGINT[] of the 76 band keys per notice           0.62 s  rows examined        574,129  heap fetches None     buffers 1,154,658
+[15:12:18] E. no index at all -- sequential scan, forced                 0.42 s  rows examined        912,000  heap fetches None     buffers 17,616
+[15:12:18] single-notice A:   0.468 ms  rows examined      1,283  buffers      466
+[15:12:18] single-notice B:   0.494 ms  rows examined      1,283  buffers    1,074
+[15:12:18] single-notice C:   0.429 ms  rows examined      1,283  buffers      824
+[15:12:19] single-notice D:   1.083 ms  rows examined      1,283  buffers    2,234
+[15:12:35] single-notice E:  80.297 ms  rows examined    912,000  buffers   11,744
+[15:12:35] point A  random bucket            51.3 us/lookup      11.3 rows/lookup
+[15:12:35] point A  200 largest buckets      79.9 us/lookup     143.4 rows/lookup
+[15:12:35] point B  random bucket            77.7 us/lookup      11.3 rows/lookup
+[15:12:35] point B  200 largest buckets     159.2 us/lookup     143.4 rows/lookup
+[15:12:36] point C  random bucket            98.9 us/lookup      11.3 rows/lookup
+[15:12:36] point C  200 largest buckets     184.6 us/lookup     143.4 rows/lookup
+[15:12:40] wrote logs/d_plans.txt
+[15:12:41] wrote figures/d_access_paths.png
+[15:12:41] wrote figures/d_storage.png
+[15:12:41] wrote C:\Users\cbsen\Desktop\dmw\q2\results\d_database.json
+
+================================================================================================================
+PART (d) SUMMARY   --   PostgreSQL 18, database 'setubid'
+================================================================================================================
+loaded: 12,000 notices, 12,000 sketches, 912,000 lsh_bucket rows (76 bands x 12000 notices)
+lsh_bucket on disk: heap 48.1 MB + covering index 47.9 MB
+
+BULK JOIN of one night's probe set (43,396 rows) against each structure:
+access path                                                     plan node    seconds  rows examined    heap f.    buffers
+-------------------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER  Index Only Scan       0.35        574,129          0    398,382
+B. same B-tree keys, NOT covering (notice_id in the heap       Index Scan       0.40        574,129          -    884,739
+C. hash index on bucket_key (single column, equality onl       Index Scan       0.44        574,129          -    684,282
+D. GIN over BIGINT[] of the 76 band keys per notice      Bitmap Heap Scan       0.62        574,129          -  1,154,658
+E. no index at all -- sequential scan, forced                    Seq Scan       0.42        912,000          -     17,616
+
+ONE NOTICE, 76 band lookups (the regime the application runs in):
+access path                                                     plan node          ms  rows examined    buffers
+---------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER  Index Only Scan       0.468          1,283        466
+B. same B-tree keys, NOT covering (notice_id in the heap       Index Scan       0.494          1,283      1,074
+C. hash index on bucket_key (single column, equality onl       Index Scan       0.429          1,283        824
+D. GIN over BIGINT[] of the 76 band keys per notice      Bitmap Heap Scan       1.083          1,283      2,234
+E. no index at all -- sequential scan, forced                    Seq Scan      80.297        912,000     11,744
+
+PREPARED POINT LOOKUPS:
+access path                                                           probe set      us/lookup    rows/lookup
+-------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER          random bucket           51.3           11.3
+A. composite B-tree (band_no,bucket_key,notice_id) COVER    200 largest buckets           79.9          143.4
+B. same B-tree keys, NOT covering (notice_id in the heap          random bucket           77.7           11.3
+B. same B-tree keys, NOT covering (notice_id in the heap    200 largest buckets          159.2          143.4
+C. hash index on bucket_key (single column, equality onl          random bucket           98.9           11.3
+C. hash index on bucket_key (single column, equality onl    200 largest buckets          184.6          143.4
+
+restart check: new process, new connection -- 912,000 bucket rows still there; index_meta K=384 bands=76 r=5 tau=0.54; lookup answered in 8.393 ms
+elapsed 64.2s
+
+==============================================================================
+RUNNING s05_skew.py  --  part (e): the skew, and what mitigating it costs
+==============================================================================
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:12:46] emissions 5,464,739; top 0.1% of buckets -> 71.7% of work; largest bucket 1320
+[15:12:46] worst bucket: band 41, 1320 members, emits 870,540 pairs, mean pairwise J 0.266, 0.190% of them above tau
+[15:12:48] cap= 400 emissions    3,106,199 (-43.2%)  labelled recall 1.0000  unbiased recall 0.99800
+[15:12:49] cap= 200 emissions    2,410,378 (-55.9%)  labelled recall 1.0000  unbiased recall 0.99800
+[15:12:49] cap= 100 emissions    1,730,345 (-68.3%)  labelled recall 1.0000  unbiased recall 0.99600
+[15:12:50] cap=  50 emissions    1,170,777 (-78.6%)  labelled recall 1.0000  unbiased recall 0.98498
+[15:12:50] cap=  25 emissions      860,334 (-84.3%)  labelled recall 0.9955  unbiased recall 0.97197
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:12:52] df_stop=0.20 |S|=250 emissions      419,595 (-92.3%)  AUC 0.9986  R@FP0 0.900  tau 0.253
+[15:12:53] df_stop=0.10 |S|=201 emissions      450,917 (-91.7%)  AUC 0.9960  R@FP0 0.832  tau 0.329
+[15:12:54] df_stop=0.05 |S|=141 emissions      384,265 (-93.0%)  AUC 0.9953  R@FP0 0.821  tau 0.355
+[15:12:55] df_stop=0.02 |S|=133 emissions      423,496 (-92.3%)  AUC 1.0000  R@FP0 0.993  tau 0.108
+[15:12:56] wrote figures/e_work_distribution.png
+[15:12:56] wrote figures/e_mitigation_price.png
+[15:12:56] wrote figures/e_before_after.png
+[15:12:56] wrote figures/e_growth_projection.png
+[15:12:56] wrote figures/e_portal_attribution.png
+[15:12:56] wrote C:\Users\cbsen\Desktop\dmw\q2\results\e_skew.json
+
+====================================================================================================
+PART (e) SUMMARY
+====================================================================================================
+full-corpus retrieval at b=76 r=5: 5,464,739 candidate pairs from 147,944 colliding buckets
+per notice: mean 911, median 709, p99 3057, max 4409
+
+concentration:
+   top_0.1%_buckets          147 buckets ->  71.7% of all emitted pairs
+   top_0.5%_buckets          739 buckets ->  83.5% of all emitted pairs
+   top_1.0%_buckets         1479 buckets ->  86.6% of all emitted pairs
+   top_5.0%_buckets         7397 buckets ->  91.1% of all emitted pairs
+   top_10.0%_buckets       14794 buckets ->  93.2% of all emitted pairs
+   top_1%_notices                      ->   3.8% of all emitted pairs
+   top_2%_notices                      ->   6.9% of all emitted pairs
+   top_5%_notices                      ->  15.2% of all emitted pairs
+   top_10%_notices                     ->  26.5% of all emitted pairs
+
+worst single bucket: band 41, 1320 members, emits 870,540 pairs = 15.9% of the entire corpus's candidate work
+   mean pairwise Jaccard inside it 0.266; only 0.190% of its pairs are above tau (~1652 real duplicates for 870,540 comparisons)
+   portals inside it: {'P094': 178, 'P006': 89, 'P001': 80, 'P005': 79, 'P002': 77, 'P004': 72, 'P003': 67, 'P240': 52}
+
+against the budget: 5,464,739 candidate pairs x 3.12 us (0.67 us to emit the row from the index + 2.46 us to score it) = 17 s for a full rebuild; a night's intake costs ~2 s
+   (budget is 1200 s; the worst bucket alone is 2.7 s)
+
+growth projection (4,000 notices/week):
+   corpus all-pairs (hours)     uncapped pairs     uncapped s     capped pairs     capped s
+-------------------------------------------------------------------------------------------
+   12,000              0.3          5,464,739             17        1,730,345            5
+   25,000              1.4         23,718,485             74        3,604,885           11
+   50,000              5.7         94,873,940            296        7,209,770           22
+  100,000             22.7        379,495,763           1186       14,419,541           45
+  220,000            110.0      1,836,759,497           5740       31,722,991           99
+   budget = 1200 s. Uncapped breaches it at roughly 100,586 notices; capped does not breach it inside the projection.
+
+M1 -- document-frequency stop-list (attacks the cause, moves the representation):
+   df_stop   mean|S|      emissions   largest      AUC    R@FP0      tau    delta   K needed
+--------------------------------------------------------------------------------------------
+      None       492      5,464,739      1320   0.9845    0.803   0.5419   0.0905        290
+       0.2       251        419,595        49   0.9986    0.900   0.2532   0.0566        564
+       0.1       202        450,917       123   0.9960    0.832   0.3290   0.0965        227
+      0.05       142        384,265       146   0.9953    0.821   0.3550   0.0727        414
+      0.02       133        423,496         9   1.0000    0.993   0.1081   0.0615        244
+   'K needed' is the signature size part (b)'s argument demands at that threshold. K=384 was sized for tau=0.54.
+
+M2 -- bucket cap (attacks the symptom, moves nothing else):
+   cap      emissions   largest p99/notice        labelled recall        unbiased recall
+----------------------------------------------------------------------------------------
+  None      5,464,739      1320       3057        1.00000 (224/224)       0.99900 (999/999)
+   400      3,106,199       385       1325        1.00000 (224/224)       0.99800 (997/999)
+   200      2,410,378       198        942        1.00000 (224/224)       0.99800 (997/999)
+   100      1,730,345       100        678        1.00000 (224/224)       0.99600 (995/999)  <== adopted
+    50      1,170,777        50        491        1.00000 (224/224)       0.98498 (984/999)
+    25        860,334        25        423        0.99554 (223/224)       0.97197 (971/999)
+
+ADOPTED: bucket cap at 100, applied at index time
+  price: emissions fall 68.3% (5,464,739 -> 1,730,345) and the largest bucket falls from 1320 to 100; the measured cost is 0 of 224 labelled duplicates above tau and 4 of 999 unbiased pairs above tau.
+  after: per notice mean 288 (was 911), p99 678 (was 3057), max 1026 (was 4409)
+  full-rebuild sketch scoring 17 s -> 5 s; nightly 2 s -> 0 s
+elapsed 14.4s
+
+==============================================================================
+RUNNING s06_nightly.py  --  the system as a nightly job
+==============================================================================
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\01_part_a_similarity.png  (35 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\02_part_b_sketch_size.png  (46 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\03_part_c_lsh_tuning.png  (51 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\04_part_d_database.png  (43 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\05_part_e_skew.png  (62 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\06_nightly_pipeline.png  (49 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\07_plan_A_covering_btree.png  (20 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\08_plan_B_noncovering.png  (19 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\09_plan_C_hash_index.png  (21 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\10_plan_E_seq_scan.png  (22 lines)
+wrote C:\Users\cbsen\Desktop\dmw\q2\screenshots\11_psql_session.png  (91 lines)
+[15:13:01] base corpus 10287 notices; 3 nights of 571
+[15:13:22] shingled 10287 notices [canon/w5] mean |S|=491 in 20.4s
+[15:13:48] minhash K=384 for 10287 notices in 25.4s
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:14:03] cold build done; suppressed 100 oversized buckets (17657 memberships)
+[15:14:10] cold build: 839,295 candidate pairs -> 12,906 merges -> 5,489 opportunities in 68.6 s
+[15:14:12] shingled 571 notices [canon/w5] mean |S|=500 in 1.1s
+[15:14:13] minhash K=384 for 571 notices in 1.4s
+[15:14:15] night 1: 571 new, 90,772 candidates, 2691 verified, 417 merges, 4.4 s (0.4% of the 20-minute budget)
+[15:14:16] shingled 571 notices [canon/w5] mean |S|=499 in 1.2s
+[15:14:17] minhash K=384 for 571 notices in 1.4s
+[15:14:20] night 2: 571 new, 95,211 candidates, 3183 verified, 553 merges, 4.9 s (0.4% of the 20-minute budget)
+[15:14:21] shingled 571 notices [canon/w5] mean |S|=496 in 1.2s
+[15:14:22] minhash K=384 for 571 notices in 1.5s
+[15:14:25] night 3: 571 new, 99,234 candidates, 3547 verified, 532 merges, 4.9 s (0.4% of the 20-minute budget)
+[15:14:25] bookmarks: 5000 unchanged, 0 via alias, 0 broken
+[15:14:25] wrote figures/f_nightly.png
+[15:14:25] wrote C:\Users\cbsen\Desktop\dmw\q2\results\f_nightly.json
+
+================================================================================================
+NIGHTLY PIPELINE -- the whole system against the clock
+================================================================================================
+cold build on 10,287 notices: 68.6 s total
+    cold: shingle                   20.44 s
+    cold: minhash                   25.44 s
+    cold: band                       0.06 s
+    cold: load notice+sketch         1.90 s
+    cold: load buckets              12.84 s
+    cold: apply bucket cap           0.54 s
+    cold: cluster base corpus        6.95 s
+    cold: persist clusters           0.39 s
+    suppressed 100 oversized buckets (17,657 memberships) at cap 100
+
+nights:
+ night      new     candidates     verified     merges    seconds  % of budget
+------------------------------------------------------------------------------
+     1      571         90,772         2691        417        4.4        0.37%
+     2      571         95,211         3183        553        4.9        0.41%
+     3      571         99,234         3547        532        4.9        0.41%
+
+  stage breakdown, last night:
+    1 sketch                             2.64 s
+    2 insert notices and sketches        0.12 s
+    3 probe the index                    0.79 s
+    4 sketch filter                      0.40 s
+    5 exact verification                 0.03 s
+    6 assign opportunities               0.05 s
+    7 persist decisions and clusters     0.04 s
+    8 index the new notices              0.82 s
+
+bookmark stability over 3 nights: 5000 unchanged, 0 resolved through an alias, 0 broken (of 5000 ids issued)
+
+end-to-end on the adjudicated pairs (final clusters, transitivity included):
+linkage policy                      duplicates kept       FALSE MERGES    opportunities    biggest
+--------------------------------------------------------------------------------------------------
+single linkage (transitive closure)       194 / 279           19 / 621              6500        575
+leader linkage (canonical check)         191 / 279            1 / 621              6689         18
+complete linkage (all members)  <=       190 / 279            0 / 621              6807          9
+
+  Pairwise, tau = 0.54 puts ZERO of the 621 adjudicated 'different' pairs above the line. Closing the merge relation transitively puts 19 of them into one card anyway (3.06%) and grows a runaway cluster of 575 notices: similarity is not transitive and single linkage does not care. Anchoring every member to the card's canonical notice cuts that to 1 (0.161%) but still allows a star of radius tau, which is where the last one comes from. Requiring the new notice to clear tau against EVERY existing member takes false merges to 0 and caps the largest card at 9. The price is recall: 190 of 279 adjudicated duplicates end up on one card, against 194 under single linkage. Under a 50:1 ratio that is the trade the ratio exists to make.
+
+cards: 12,000 notices -> 6,807 opportunities (43.3% fewer cards), largest cluster 9
+elapsed 87.4s
+
+==============================================================================
+ALL STAGES
+==============================================================================
+  s01_similarity.py        ok      29.6 s
+  s02_sketch_size.py       ok      87.5 s
+  s03_lsh_tuning.py        ok      10.0 s
+  s04_database.py          ok      65.5 s
+  s05_skew.py              ok      15.8 s
+  s06_nightly.py           ok      88.7 s
+
+rendering screenshots ...

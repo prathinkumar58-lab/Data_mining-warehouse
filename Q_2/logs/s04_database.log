@@ -1,0 +1,64 @@
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:40] band keys: 12000 notices x 76 bands
+[15:11:41] schema created
+[15:12:09] loaded and analysed
+[15:12:09] lsh_bucket: 912,000 rows, heap 48.1 MB, index 47.9 MB
+[15:12:09] probe set: 43396 rows (571 new notices x 76 bands)
+[15:12:10] A. composite B-tree (band_no,bucket_key,notice_id) COVER      0.35 s  rows examined        574,129  heap fetches 0        buffers 398,382
+[15:12:12] B. same B-tree keys, NOT covering (notice_id in the heap      0.40 s  rows examined        574,129  heap fetches None     buffers 884,739
+[15:12:14] C. hash index on bucket_key (single column, equality onl      0.44 s  rows examined        574,129  heap fetches None     buffers 684,282
+[15:12:16] D. GIN over BIGINT[] of the 76 band keys per notice           0.62 s  rows examined        574,129  heap fetches None     buffers 1,154,658
+[15:12:18] E. no index at all -- sequential scan, forced                 0.42 s  rows examined        912,000  heap fetches None     buffers 17,616
+[15:12:18] single-notice A:   0.468 ms  rows examined      1,283  buffers      466
+[15:12:18] single-notice B:   0.494 ms  rows examined      1,283  buffers    1,074
+[15:12:18] single-notice C:   0.429 ms  rows examined      1,283  buffers      824
+[15:12:19] single-notice D:   1.083 ms  rows examined      1,283  buffers    2,234
+[15:12:35] single-notice E:  80.297 ms  rows examined    912,000  buffers   11,744
+[15:12:35] point A  random bucket            51.3 us/lookup      11.3 rows/lookup
+[15:12:35] point A  200 largest buckets      79.9 us/lookup     143.4 rows/lookup
+[15:12:35] point B  random bucket            77.7 us/lookup      11.3 rows/lookup
+[15:12:35] point B  200 largest buckets     159.2 us/lookup     143.4 rows/lookup
+[15:12:36] point C  random bucket            98.9 us/lookup      11.3 rows/lookup
+[15:12:36] point C  200 largest buckets     184.6 us/lookup     143.4 rows/lookup
+[15:12:40] wrote logs/d_plans.txt
+[15:12:41] wrote figures/d_access_paths.png
+[15:12:41] wrote figures/d_storage.png
+[15:12:41] wrote C:\Users\cbsen\Desktop\dmw\q2\results\d_database.json
+
+================================================================================================================
+PART (d) SUMMARY   --   PostgreSQL 18, database 'setubid'
+================================================================================================================
+loaded: 12,000 notices, 12,000 sketches, 912,000 lsh_bucket rows (76 bands x 12000 notices)
+lsh_bucket on disk: heap 48.1 MB + covering index 47.9 MB
+
+BULK JOIN of one night's probe set (43,396 rows) against each structure:
+access path                                                     plan node    seconds  rows examined    heap f.    buffers
+-------------------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER  Index Only Scan       0.35        574,129          0    398,382
+B. same B-tree keys, NOT covering (notice_id in the heap       Index Scan       0.40        574,129          -    884,739
+C. hash index on bucket_key (single column, equality onl       Index Scan       0.44        574,129          -    684,282
+D. GIN over BIGINT[] of the 76 band keys per notice      Bitmap Heap Scan       0.62        574,129          -  1,154,658
+E. no index at all -- sequential scan, forced                    Seq Scan       0.42        912,000          -     17,616
+
+ONE NOTICE, 76 band lookups (the regime the application runs in):
+access path                                                     plan node          ms  rows examined    buffers
+---------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER  Index Only Scan       0.468          1,283        466
+B. same B-tree keys, NOT covering (notice_id in the heap       Index Scan       0.494          1,283      1,074
+C. hash index on bucket_key (single column, equality onl       Index Scan       0.429          1,283        824
+D. GIN over BIGINT[] of the 76 band keys per notice      Bitmap Heap Scan       1.083          1,283      2,234
+E. no index at all -- sequential scan, forced                    Seq Scan      80.297        912,000     11,744
+
+PREPARED POINT LOOKUPS:
+access path                                                           probe set      us/lookup    rows/lookup
+-------------------------------------------------------------------------------------------------------------
+A. composite B-tree (band_no,bucket_key,notice_id) COVER          random bucket           51.3           11.3
+A. composite B-tree (band_no,bucket_key,notice_id) COVER    200 largest buckets           79.9          143.4
+B. same B-tree keys, NOT covering (notice_id in the heap          random bucket           77.7           11.3
+B. same B-tree keys, NOT covering (notice_id in the heap    200 largest buckets          159.2          143.4
+C. hash index on bucket_key (single column, equality onl          random bucket           98.9           11.3
+C. hash index on bucket_key (single column, equality onl    200 largest buckets          184.6          143.4
+
+restart check: new process, new connection -- 912,000 bucket rows still there; index_meta K=384 bands=76 r=5 tau=0.54; lookup answered in 8.393 ms
+elapsed 64.2s

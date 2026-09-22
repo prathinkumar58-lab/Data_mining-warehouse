@@ -1,0 +1,265 @@
+{
+  "cold_build": {
+    "notices": 10287,
+    "candidate_pairs_examined": 839295,
+    "merged_pairs": 12906,
+    "opportunities": 5489,
+    "suppressed_buckets": 100,
+    "suppressed_memberships": 17657,
+    "seconds_by_stage": {
+      "cold: shingle": 20.44,
+      "cold: minhash": 25.44,
+      "cold: band": 0.06,
+      "cold: load notice+sketch": 1.9,
+      "cold: load buckets": 12.84,
+      "cold: apply bucket cap": 0.54,
+      "cold: cluster base corpus": 6.95,
+      "cold: persist clusters": 0.39
+    },
+    "total_seconds": 68.6
+  },
+  "nights": [
+    {
+      "night": 1,
+      "new_notices": 571,
+      "candidate_pairs": 90772,
+      "survived_sketch_filter": 2691,
+      "exact_verifications": 2691,
+      "merges": 417,
+      "new_opportunities": 490,
+      "aliases_created_total": 0,
+      "seconds_by_stage": {
+        "1 sketch": 2.57,
+        "2 insert notices and sketches": 0.11,
+        "3 probe the index": 0.71,
+        "4 sketch filter": 0.36,
+        "5 exact verification": 0.03,
+        "6 assign opportunities": 0.02,
+        "7 persist decisions and clusters": 0.04,
+        "8 index the new notices": 0.61
+      },
+      "total_seconds": 4.44,
+      "budget_used_pct": 0.37
+    },
+    {
+      "night": 2,
+      "new_notices": 571,
+      "candidate_pairs": 95211,
+      "survived_sketch_filter": 3183,
+      "exact_verifications": 3183,
+      "merges": 553,
+      "new_opportunities": 464,
+      "aliases_created_total": 53,
+      "seconds_by_stage": {
+        "1 sketch": 2.61,
+        "2 insert notices and sketches": 0.09,
+        "3 probe the index": 0.77,
+        "4 sketch filter": 0.39,
+        "5 exact verification": 0.03,
+        "6 assign opportunities": 0.03,
+        "7 persist decisions and clusters": 0.04,
+        "8 index the new notices": 0.96
+      },
+      "total_seconds": 4.92,
+      "budget_used_pct": 0.41
+    },
+    {
+      "night": 3,
+      "new_notices": 571,
+      "candidate_pairs": 99234,
+      "survived_sketch_filter": 3547,
+      "exact_verifications": 3547,
+      "merges": 532,
+      "new_opportunities": 477,
+      "aliases_created_total": 113,
+      "seconds_by_stage": {
+        "1 sketch": 2.64,
+        "2 insert notices and sketches": 0.12,
+        "3 probe the index": 0.79,
+        "4 sketch filter": 0.4,
+        "5 exact verification": 0.03,
+        "6 assign opportunities": 0.05,
+        "7 persist decisions and clusters": 0.04,
+        "8 index the new notices": 0.82
+      },
+      "total_seconds": 4.9,
+      "budget_used_pct": 0.41
+    }
+  ],
+  "bookmark_stability": {
+    "bookmarks_taken_after_cold_build": 5000,
+    "ids_still_valid_unchanged": 5000,
+    "ids_resolved_through_an_alias": 0,
+    "ids_that_stopped_resolving": 0,
+    "aliases_recorded_in_db": 113,
+    "guarantee": "An opportunity id is OPP-<founding notice id>. It is minted once and never reissued. Absorption writes an alias row rather than deleting the id, so every bookmark ever issued still resolves -- 5000 of 5000 unchanged, 0 through an alias, 0 broken."
+  },
+  "end_to_end_on_labels": {
+    "same_pairs_in_one_opportunity": 190,
+    "same_pairs_total": 279,
+    "recall": 0.681,
+    "different_pairs_in_one_opportunity": 0,
+    "different_pairs_total": 621,
+    "false_merge_rate": 0.0,
+    "false_merge_examples": [],
+    "opportunities": 6807,
+    "reduction_pct": 43.27,
+    "largest_cluster": 9,
+    "size_histogram": {
+      "1": 4570,
+      "2": 941,
+      "3": 549,
+      "4": 288,
+      "5": 213,
+      "6": 115,
+      "7": 72,
+      "8": 41,
+      "9": 18
+    },
+    "note": "Measured on the FINAL cluster assignment, so transitivity is included: a pair counts as merged if the system put the two notices in the same opportunity, directly or through a chain. This is where a threshold that is perfectly safe PAIRWISE can still produce a false merge, which is why it is measured and not assumed."
+  },
+  "linkage_comparison": {
+    "single_linkage_transitive_closure": {
+      "same_pairs_in_one_opportunity": 194,
+      "same_pairs_total": 279,
+      "recall": 0.6953,
+      "different_pairs_in_one_opportunity": 19,
+      "different_pairs_total": 621,
+      "false_merge_rate": 0.0306,
+      "false_merge_examples": [
+        [
+          "N010748",
+          "N011807"
+        ],
+        [
+          "N006564",
+          "N007387"
+        ],
+        [
+          "N003662",
+          "N010020"
+        ],
+        [
+          "N004028",
+          "N010035"
+        ],
+        [
+          "N000335",
+          "N007009"
+        ],
+        [
+          "N000078",
+          "N007325"
+        ],
+        [
+          "N001207",
+          "N004094"
+        ],
+        [
+          "N003265",
+          "N010005"
+        ],
+        [
+          "N001323",
+          "N006364"
+        ],
+        [
+          "N010035",
+          "N011646"
+        ]
+      ],
+      "opportunities": 6500,
+      "reduction_pct": 45.83,
+      "largest_cluster": 575,
+      "size_histogram": {
+        "1": 4454,
+        "2": 837,
+        "3": 486,
+        "4": 255,
+        "5": 212,
+        "6": 117,
+        "7": 71,
+        "8": 43,
+        "9": 24,
+        "575": 1
+      }
+    },
+    "leader_linkage_canonical_check": {
+      "same_pairs_in_one_opportunity": 191,
+      "same_pairs_total": 279,
+      "recall": 0.6846,
+      "different_pairs_in_one_opportunity": 1,
+      "different_pairs_total": 621,
+      "false_merge_rate": 0.00161,
+      "false_merge_examples": [
+        [
+          "N001207",
+          "N004094"
+        ]
+      ],
+      "opportunities": 6689,
+      "reduction_pct": 44.26,
+      "largest_cluster": 18,
+      "size_histogram": {
+        "1": 4530,
+        "2": 888,
+        "3": 499,
+        "4": 267,
+        "5": 218,
+        "6": 124,
+        "7": 81,
+        "8": 44,
+        "9": 25,
+        "10": 3,
+        "11": 6,
+        "12": 2,
+        "13": 1,
+        "18": 1
+      }
+    },
+    "complete_linkage_all_members": {
+      "same_pairs_in_one_opportunity": 190,
+      "same_pairs_total": 279,
+      "recall": 0.681,
+      "different_pairs_in_one_opportunity": 0,
+      "different_pairs_total": 621,
+      "false_merge_rate": 0.0,
+      "false_merge_examples": [],
+      "opportunities": 6807,
+      "reduction_pct": 43.27,
+      "largest_cluster": 9,
+      "size_histogram": {
+        "1": 4570,
+        "2": 941,
+        "3": 549,
+        "4": 288,
+        "5": 213,
+        "6": 115,
+        "7": 72,
+        "8": 41,
+        "9": 18
+      },
+      "note": "Measured on the FINAL cluster assignment, so transitivity is included: a pair counts as merged if the system put the two notices in the same opportunity, directly or through a chain. This is where a threshold that is perfectly safe PAIRWISE can still produce a false merge, which is why it is measured and not assumed."
+    },
+    "finding": "Pairwise, tau = 0.54 puts ZERO of the 621 adjudicated 'different' pairs above the line. Closing the merge relation transitively puts 19 of them into one card anyway (3.06%) and grows a runaway cluster of 575 notices: similarity is not transitive and single linkage does not care. Anchoring every member to the card's canonical notice cuts that to 1 (0.161%) but still allows a star of radius tau, which is where the last one comes from. Requiring the new notice to clear tau against EVERY existing member takes false merges to 0 and caps the largest card at 9. The price is recall: 190 of 279 adjudicated duplicates end up on one card, against 194 under single linkage. Under a 50:1 ratio that is the trade the ratio exists to make."
+  },
+  "clusters": {
+    "notices": 12000,
+    "opportunities": 6807,
+    "cards_removed": 5193,
+    "reduction_pct": 43.27,
+    "size_histogram": {
+      "1": 4570,
+      "2": 941,
+      "3": 549,
+      "4": 288,
+      "5": 213,
+      "6": 115,
+      "7": 72,
+      "8": 41,
+      "9": 18
+    },
+    "largest_cluster": 9
+  },
+  "elapsed_seconds": 87.4
+}

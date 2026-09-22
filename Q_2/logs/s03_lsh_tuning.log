@@ -1,0 +1,73 @@
+[15:11:31] unbiased anchor sample: 400 anchors x 12000 notices = 4799600 pairs
+[15:11:31] R=50 -> tau=0.5419, FNR on true duplicates 0.197
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:11:31] b=128 r= 3 t=0.198 recall(J>=tau, unbiased)=1.0000 (981/981)  recall(labelled)=1.0000  emissions=133,429,817  max bucket=5507
+[15:11:32] b= 96 r= 4 t=0.319 recall(J>=tau, unbiased)=1.0000 (981/981)  recall(labelled)=1.0000  emissions=26,285,248  max bucket=3576
+[15:11:32] b= 76 r= 5 t=0.421 recall(J>=tau, unbiased)=0.9990 (980/981)  recall(labelled)=1.0000  emissions=5,464,739  max bucket=1320
+[15:11:32] b= 64 r= 6 t=0.500 recall(J>=tau, unbiased)=0.9796 (961/981)  recall(labelled)=0.9865  emissions=2,583,905  max bucket=1231
+[15:11:33] b= 54 r= 7 t=0.566 recall(J>=tau, unbiased)=0.9337 (916/981)  recall(labelled)=0.9686  emissions=1,075,921  max bucket=955
+[15:11:33] b= 48 r= 8 t=0.616 recall(J>=tau, unbiased)=0.8756 (859/981)  recall(labelled)=0.9641  emissions=351,204  max bucket=138
+[15:11:33] b= 42 r= 9 t=0.660 recall(J>=tau, unbiased)=0.8267 (811/981)  recall(labelled)=0.9462  emissions=269,661  max bucket=203
+[15:11:33] b= 38 r=10 t=0.695 recall(J>=tau, unbiased)=0.8145 (799/981)  recall(labelled)=0.9283  emissions=204,435  max bucket=58
+[15:11:33] b= 32 r=12 t=0.749 recall(J>=tau, unbiased)=0.7829 (768/981)  recall(labelled)=0.8969  emissions=145,274  max bucket=9
+[15:11:34] b= 24 r=16 t=0.820 recall(J>=tau, unbiased)=0.7360 (722/981)  recall(labelled)=0.8655  emissions=85,827  max bucket=9
+[15:11:34] operating point: b=76 r=5
+[15:11:34] wrote figures/c_s_curves.png
+[15:11:35] wrote figures/c_recall_vs_work.png
+[15:11:35] wrote figures/c_cost_ratio.png
+[15:11:35] wrote figures/c_candidate_lengths.png
+[15:11:35] wrote C:\Users\cbsen\Desktop\dmw\q2\results\c_lsh.json
+
+================================================================================================
+PART (c) SUMMARY
+================================================================================================
+Where the 50:1 asymmetry enters -- the merge threshold:
+       R      tau  FPR on hard negatives   true duplicates merged
+       1   0.3069                0.05636                    95.3%
+       5   0.4675                0.00483                    82.8%
+      10   0.5419                0.00000                    80.3%
+      50   0.5419                0.00000                    80.3%  <== adopted
+     200   0.5419                0.00000                    80.3%
+    1000   0.5419                0.00000                    80.3%
+
+Saturation: tau stops moving above R = 10 (highest adjudicated 'different' pair = 0.5367).
+  review band [0.468, 0.542): ~26,370 pairs corpus-wide, ~2511 per night's intake -- too many for a human
+  band that fits a 200-pair/night adjudication budget: [0.527, 0.542) = 162/night
+
+Candidate stage -- recall against work (full corpus, 12,000 notices):
+   b   r   thresh P[cand|tau] recall(J>=tau)     labelled        emissions  max bucket
+--------------------------------------------------------------------------------------
+ 128   3    0.198     1.0000        1.00000       1.0000      133,429,817        5507
+  96   4    0.320     0.9998        1.00000       1.0000       26,285,248        3576
+  76   5    0.421     0.9737        0.99898       1.0000        5,464,739        1320 <==
+  64   6    0.500     0.8063        0.97961       0.9865        2,583,905        1231
+  54   7    0.566     0.5258        0.93374       0.9686        1,075,921         955
+  48   8    0.616     0.3011        0.87564       0.9641          351,204         138
+  42   9    0.660     0.1560        0.82671       0.9462          269,661         203
+  38  10    0.695     0.0797        0.81448       0.9283          204,435          58
+  32  12    0.749     0.0203        0.78287       0.8969          145,274           9
+  24  16    0.820     0.0013        0.73598       0.8655           85,827           9
+
+candidate rows per notice at the operating point: mean 911  median 709  p90 1887  p99 3057  max 4409
+(the gap between the median and the max is what part (e) is about)
+
+realised vs theoretical S-curve at b=76 r=5:
+       J      pairs  retrieved   realised     theory
+   0.125      31119         56    0.00180    0.00232
+   0.175     673502       5651    0.00839    0.01240
+   0.225    2192540      79186    0.03612    0.04289
+   0.275    1758354     188522    0.10722    0.11275
+   0.325     133147      31582    0.23720    0.24124
+   0.375       3842       1417    0.36882    0.43204
+   0.425       3669       1994    0.54347    0.65395
+   0.475       1854       1433    0.77292    0.84438
+   0.525        633        598    0.94471    0.95465
+   0.575        139        139    1.00000    0.99280
+   0.675         25         25    1.00000    0.99999
+   0.825         39         39    1.00000    1.00000
+   0.875        151        151    1.00000    1.00000
+   0.925        332        332    1.00000    1.00000
+   0.975        209        209    1.00000    1.00000
+
+elapsed 8.4s

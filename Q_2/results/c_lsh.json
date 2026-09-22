@@ -1,0 +1,410 @@
+{
+  "threshold_vs_cost_ratio": [
+    {
+      "cost_ratio": 1,
+      "tau": 0.3069,
+      "fpr_on_hard_negatives": 0.05636,
+      "fnr_on_true_duplicates": 0.04659,
+      "weighted_cost": 0.103
+    },
+    {
+      "cost_ratio": 5,
+      "tau": 0.4675,
+      "fpr_on_hard_negatives": 0.00483,
+      "fnr_on_true_duplicates": 0.17204,
+      "weighted_cost": 0.1962
+    },
+    {
+      "cost_ratio": 10,
+      "tau": 0.5419,
+      "fpr_on_hard_negatives": 0.0,
+      "fnr_on_true_duplicates": 0.19713,
+      "weighted_cost": 0.1971
+    },
+    {
+      "cost_ratio": 50,
+      "tau": 0.5419,
+      "fpr_on_hard_negatives": 0.0,
+      "fnr_on_true_duplicates": 0.19713,
+      "weighted_cost": 0.1971
+    },
+    {
+      "cost_ratio": 200,
+      "tau": 0.5419,
+      "fpr_on_hard_negatives": 0.0,
+      "fnr_on_true_duplicates": 0.19713,
+      "weighted_cost": 0.1971
+    },
+    {
+      "cost_ratio": 1000,
+      "tau": 0.5419,
+      "fpr_on_hard_negatives": 0.0,
+      "fnr_on_true_duplicates": 0.19713,
+      "weighted_cost": 0.1971
+    }
+  ],
+  "adopted": {
+    "cost_ratio_R": 50.0,
+    "tau": 0.5419,
+    "fnr_at_tau": 0.19713
+  },
+  "count_level_risk": {
+    "hard_negatives_tested": 621,
+    "hard_negatives_above_tau": 0,
+    "fpr_95pct_upper_bound_on_hard_negatives": 0.00481,
+    "reading": "Zero of 621 adjudicated 'different' pairs reach tau = 0.54, but zero events out of 621 only bounds the rate at 0.48% with 95% confidence. Because those negatives are HARD (a human was asked about them), that bound is pessimistic for a random candidate pair -- but it is the number to quote to the head of product, and it is why the merge decision is taken on exact Jaccard rather than on the sketch."
+  },
+  "threshold_saturation": {
+    "saturates_at_R": 10,
+    "why": "tau is pinned just above the highest-scoring adjudicated 'different' pair (0.5367). Above R = 10 the labelled set contains no negative that moving tau could exclude, so a larger ratio changes nothing measurable. R = 50 is therefore recorded as the governing number, but what it is really buying is the decision to verify on exact Jaccard rather than on the sketch, and the review band below.",
+    "review_band": [
+      0.4675,
+      0.5419
+    ],
+    "pairs_in_band_per_full_corpus": 26370,
+    "pairs_in_band_per_night": 2511,
+    "recommendation": "Pairs just below tau are the ones the evidence cannot settle, and a ratio of 50 says neither merging nor silently discarding them is right. But the full band [0.468, 0.542) is 2511 pairs on a night's intake, which is not an hour of anyone's day -- so it cannot all go to a human. The band that fits a 200-pair/night adjudication budget is [0.527, 0.542) (162 pairs/night). That is where an R of 50 should be spent: buy certainty on the pairs nearest the line, and let the rest fall to the 'grumble' side, which is the cheap error.",
+    "affordable_review_band": [
+      0.527,
+      0.5419
+    ],
+    "affordable_band_pairs_per_night": 162
+  },
+  "grid": [
+    {
+      "b": 128,
+      "r": 3,
+      "rows_used": 384,
+      "lsh_threshold": 0.1984,
+      "p_at_tau": 1.0,
+      "unbiased_recall_pairs_above_tau": 1.0,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 0,
+      "labelled_recall_dups_above_tau": 1.0,
+      "theoretical_recall_dups_above_tau": 1.0,
+      "labelled_recall_all_same_pairs": 0.9892,
+      "candidate_emissions_full_corpus": 133429817,
+      "emissions_per_notice": 11119.2,
+      "largest_bucket": 5507,
+      "buckets_with_collisions": 197148,
+      "band_build_seconds": 0.6
+    },
+    {
+      "b": 96,
+      "r": 4,
+      "rows_used": 384,
+      "lsh_threshold": 0.3195,
+      "p_at_tau": 0.99983,
+      "unbiased_recall_pairs_above_tau": 1.0,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 0,
+      "labelled_recall_dups_above_tau": 1.0,
+      "theoretical_recall_dups_above_tau": 1.0,
+      "labelled_recall_all_same_pairs": 0.9391,
+      "candidate_emissions_full_corpus": 26285248,
+      "emissions_per_notice": 2190.4,
+      "largest_bucket": 3576,
+      "buckets_with_collisions": 176058,
+      "band_build_seconds": 0.4
+    },
+    {
+      "b": 76,
+      "r": 5,
+      "rows_used": 380,
+      "lsh_threshold": 0.4206,
+      "p_at_tau": 0.97367,
+      "unbiased_recall_pairs_above_tau": 0.99898,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 1,
+      "labelled_recall_dups_above_tau": 1.0,
+      "theoretical_recall_dups_above_tau": 0.9995,
+      "labelled_recall_all_same_pairs": 0.8746,
+      "candidate_emissions_full_corpus": 5464739,
+      "emissions_per_notice": 455.4,
+      "largest_bucket": 1320,
+      "buckets_with_collisions": 147944,
+      "band_build_seconds": 0.3
+    },
+    {
+      "b": 64,
+      "r": 6,
+      "rows_used": 384,
+      "lsh_threshold": 0.5,
+      "p_at_tau": 0.80632,
+      "unbiased_recall_pairs_above_tau": 0.97961,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 20,
+      "labelled_recall_dups_above_tau": 0.9865,
+      "theoretical_recall_dups_above_tau": 0.9945,
+      "labelled_recall_all_same_pairs": 0.8208,
+      "candidate_emissions_full_corpus": 2583905,
+      "emissions_per_notice": 215.3,
+      "largest_bucket": 1231,
+      "buckets_with_collisions": 125487,
+      "band_build_seconds": 0.3
+    },
+    {
+      "b": 54,
+      "r": 7,
+      "rows_used": 378,
+      "lsh_threshold": 0.5656,
+      "p_at_tau": 0.52581,
+      "unbiased_recall_pairs_above_tau": 0.93374,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 65,
+      "labelled_recall_dups_above_tau": 0.9686,
+      "theoretical_recall_dups_above_tau": 0.981,
+      "labelled_recall_all_same_pairs": 0.7885,
+      "candidate_emissions_full_corpus": 1075921,
+      "emissions_per_notice": 89.7,
+      "largest_bucket": 955,
+      "buckets_with_collisions": 103640,
+      "band_build_seconds": 0.3
+    },
+    {
+      "b": 48,
+      "r": 8,
+      "rows_used": 384,
+      "lsh_threshold": 0.6164,
+      "p_at_tau": 0.30112,
+      "unbiased_recall_pairs_above_tau": 0.87564,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 122,
+      "labelled_recall_dups_above_tau": 0.9641,
+      "theoretical_recall_dups_above_tau": 0.9628,
+      "labelled_recall_all_same_pairs": 0.7814,
+      "candidate_emissions_full_corpus": 351204,
+      "emissions_per_notice": 29.3,
+      "largest_bucket": 138,
+      "buckets_with_collisions": 89833,
+      "band_build_seconds": 0.2
+    },
+    {
+      "b": 42,
+      "r": 9,
+      "rows_used": 378,
+      "lsh_threshold": 0.6601,
+      "p_at_tau": 0.15599,
+      "unbiased_recall_pairs_above_tau": 0.82671,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 170,
+      "labelled_recall_dups_above_tau": 0.9462,
+      "theoretical_recall_dups_above_tau": 0.9424,
+      "labelled_recall_all_same_pairs": 0.7599,
+      "candidate_emissions_full_corpus": 269661,
+      "emissions_per_notice": 22.5,
+      "largest_bucket": 203,
+      "buckets_with_collisions": 75997,
+      "band_build_seconds": 0.2
+    },
+    {
+      "b": 38,
+      "r": 10,
+      "rows_used": 380,
+      "lsh_threshold": 0.6951,
+      "p_at_tau": 0.07971,
+      "unbiased_recall_pairs_above_tau": 0.81448,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 182,
+      "labelled_recall_dups_above_tau": 0.9283,
+      "theoretical_recall_dups_above_tau": 0.9242,
+      "labelled_recall_all_same_pairs": 0.7455,
+      "candidate_emissions_full_corpus": 204435,
+      "emissions_per_notice": 17.0,
+      "largest_bucket": 58,
+      "buckets_with_collisions": 66966,
+      "band_build_seconds": 0.2
+    },
+    {
+      "b": 32,
+      "r": 12,
+      "rows_used": 384,
+      "lsh_threshold": 0.7492,
+      "p_at_tau": 0.02032,
+      "unbiased_recall_pairs_above_tau": 0.78287,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 213,
+      "labelled_recall_dups_above_tau": 0.8969,
+      "theoretical_recall_dups_above_tau": 0.8958,
+      "labelled_recall_all_same_pairs": 0.7204,
+      "candidate_emissions_full_corpus": 145274,
+      "emissions_per_notice": 12.1,
+      "largest_bucket": 9,
+      "buckets_with_collisions": 53041,
+      "band_build_seconds": 0.2
+    },
+    {
+      "b": 24,
+      "r": 16,
+      "rows_used": 384,
+      "lsh_threshold": 0.8199,
+      "p_at_tau": 0.00133,
+      "unbiased_recall_pairs_above_tau": 0.73598,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 259,
+      "labelled_recall_dups_above_tau": 0.8655,
+      "theoretical_recall_dups_above_tau": 0.854,
+      "labelled_recall_all_same_pairs": 0.6918,
+      "candidate_emissions_full_corpus": 85827,
+      "emissions_per_notice": 7.2,
+      "largest_bucket": 9,
+      "buckets_with_collisions": 35668,
+      "band_build_seconds": 0.2
+    }
+  ],
+  "operating_point": {
+    "b": 76,
+    "r": 5,
+    "rule": "cheapest (b, r) whose realised recall on true duplicates above tau is >= 99%. The recall floor is set one order of magnitude below the loss the threshold already imposes (FNR at tau = 0.197), so retrieval is not the binding source of misses.",
+    "detail": {
+      "b": 76,
+      "r": 5,
+      "rows_used": 380,
+      "lsh_threshold": 0.4206,
+      "p_at_tau": 0.97367,
+      "unbiased_recall_pairs_above_tau": 0.99898,
+      "unbiased_n_pairs_above_tau": 981,
+      "unbiased_misses": 1,
+      "labelled_recall_dups_above_tau": 1.0,
+      "theoretical_recall_dups_above_tau": 0.9995,
+      "labelled_recall_all_same_pairs": 0.8746,
+      "candidate_emissions_full_corpus": 5464739,
+      "emissions_per_notice": 455.4,
+      "largest_bucket": 1320,
+      "buckets_with_collisions": 147944,
+      "band_build_seconds": 0.3
+    }
+  },
+  "empirical_s_curve": [
+    {
+      "j_lo": 0.1,
+      "j_mid": 0.125,
+      "n": 31119,
+      "retrieved": 56,
+      "realised": 0.0018,
+      "theory": 0.00232
+    },
+    {
+      "j_lo": 0.15,
+      "j_mid": 0.175,
+      "n": 673502,
+      "retrieved": 5651,
+      "realised": 0.00839,
+      "theory": 0.0124
+    },
+    {
+      "j_lo": 0.2,
+      "j_mid": 0.225,
+      "n": 2192540,
+      "retrieved": 79186,
+      "realised": 0.03612,
+      "theory": 0.04289
+    },
+    {
+      "j_lo": 0.25,
+      "j_mid": 0.275,
+      "n": 1758354,
+      "retrieved": 188522,
+      "realised": 0.10722,
+      "theory": 0.11275
+    },
+    {
+      "j_lo": 0.3,
+      "j_mid": 0.325,
+      "n": 133147,
+      "retrieved": 31582,
+      "realised": 0.2372,
+      "theory": 0.24124
+    },
+    {
+      "j_lo": 0.35,
+      "j_mid": 0.375,
+      "n": 3842,
+      "retrieved": 1417,
+      "realised": 0.36882,
+      "theory": 0.43204
+    },
+    {
+      "j_lo": 0.4,
+      "j_mid": 0.425,
+      "n": 3669,
+      "retrieved": 1994,
+      "realised": 0.54347,
+      "theory": 0.65395
+    },
+    {
+      "j_lo": 0.45,
+      "j_mid": 0.475,
+      "n": 1854,
+      "retrieved": 1433,
+      "realised": 0.77292,
+      "theory": 0.84438
+    },
+    {
+      "j_lo": 0.5,
+      "j_mid": 0.525,
+      "n": 633,
+      "retrieved": 598,
+      "realised": 0.94471,
+      "theory": 0.95465
+    },
+    {
+      "j_lo": 0.55,
+      "j_mid": 0.575,
+      "n": 139,
+      "retrieved": 139,
+      "realised": 1.0,
+      "theory": 0.9928
+    },
+    {
+      "j_lo": 0.65,
+      "j_mid": 0.675,
+      "n": 25,
+      "retrieved": 25,
+      "realised": 1.0,
+      "theory": 0.99999
+    },
+    {
+      "j_lo": 0.8,
+      "j_mid": 0.825,
+      "n": 39,
+      "retrieved": 39,
+      "realised": 1.0,
+      "theory": 1.0
+    },
+    {
+      "j_lo": 0.85,
+      "j_mid": 0.875,
+      "n": 151,
+      "retrieved": 151,
+      "realised": 1.0,
+      "theory": 1.0
+    },
+    {
+      "j_lo": 0.9,
+      "j_mid": 0.925,
+      "n": 332,
+      "retrieved": 332,
+      "realised": 1.0,
+      "theory": 1.0
+    },
+    {
+      "j_lo": 0.95,
+      "j_mid": 0.975,
+      "n": 209,
+      "retrieved": 209,
+      "realised": 1.0,
+      "theory": 1.0
+    }
+  ],
+  "empirical_s_curve_note": "Measured on the unbiased anchor sample (400 anchors x 12000 notices = 4,799,600 pairs), so the low-J end is a real measurement rather than an artefact of having sampled pairs that an LSH pass already liked.",
+  "candidate_list_lengths": {
+    "mean": 910.8,
+    "median": 709.0,
+    "p90": 1887.1000000000004,
+    "p99": 3057.01,
+    "max": 4409,
+    "note": "counted with multiplicity across bands, i.e. the rows a lookup returns"
+  },
+  "elapsed_seconds": 8.4
+}

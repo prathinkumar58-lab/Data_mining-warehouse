@@ -1,0 +1,61 @@
+[15:09:30] corpus 12000 notices / 260 portals; labels 900 rows
+[15:09:30] labelled pairs touch 1644 distinct notices
+[15:09:35] shingled 1644 notices [raw/w3] mean |S|=684 in 0.7s
+[15:09:35] raw/w3     AUC=0.9207 R@FP0=0.681 [0.631,0.738] |S|= 684  0.7s
+[15:09:36] shingled 1644 notices [raw/w5] mean |S|=736 in 0.7s
+[15:09:36] raw/w5     AUC=0.9575 R@FP0=0.731 [0.681,0.785] |S|= 735  0.7s
+[15:09:37] shingled 1644 notices [raw/c5] mean |S|=2849 in 0.9s
+[15:09:37] raw/c5     AUC=0.8475 R@FP0=0.502 [0.452,0.591] |S|=2848  0.9s
+[15:09:39] shingled 1644 notices [mask/w5] mean |S|=482 in 2.0s
+[15:09:39] mask/w5    AUC=0.9371 R@FP0=0.771 [0.728,0.835] |S|= 481  2.0s
+[15:09:42] shingled 1644 notices [canon/w3] mean |S|=449 in 3.3s
+[15:09:42] canon/w3   AUC=0.9367 R@FP0=0.763 [0.717,0.832] |S|= 449  3.3s
+[15:09:45] shingled 1644 notices [canon/w5] mean |S|=487 in 3.3s
+[15:09:45] canon/w5   AUC=0.9845 R@FP0=0.803 [0.760,0.857] |S|= 486  3.3s
+[15:09:49] shingled 1644 notices [canon/w7] mean |S|=505 in 3.3s
+[15:09:49] canon/w7   AUC=0.9950 R@FP0=0.817 [0.774,0.875] |S|= 504  3.3s
+[15:09:52] shingled 1644 notices [canon/w9] mean |S|=520 in 3.3s
+[15:09:52] canon/w9   AUC=0.9963 R@FP0=0.839 [0.799,0.900] |S|= 520  3.3s
+[15:09:55] shingled 1644 notices [canon/c5] mean |S|=2064 in 3.4s
+[15:09:56] canon/c5   AUC=0.8679 R@FP0=0.735 [0.685,0.792] |S|=2064  3.4s
+[15:09:57] wrote figures/a_score_distributions.png
+[15:09:57] wrote figures/a_separation.png
+[15:09:58] wrote figures/a_granularity_tradeoff.png
+[15:09:58] wrote C:\Users\cbsen\Desktop\dmw\q2\results\a_similarity.json
+
+============================================================================================
+PART (a) SUMMARY   --   similarity = exact Jaccard over shingle sets
+============================================================================================
+labelled set: 279 same / 621 different (31% same) against 7.20e+07 possible corpus pairs
+boilerplate rule fired on 83 portals; on the nodal aggregators it removes:
+    P002  5786 -> 3675 chars  (-36%)
+    P001  5770 -> 3664 chars  (-36%)
+    P005  5715 -> 3603 chars  (-37%)
+    P004  4981 -> 3671 chars  (-26%)
+    P006  4984 -> 3691 chars  (-26%)
+    P003  4974 -> 3679 chars  (-26%)
+
+config     what it does                       mean|S|      AUC   R@FP0   R@FP0 95% CI
+-------------------------------------------------------------------------------------
+raw/w3     everything kept, word 3-grams          684   0.9207   0.681  [0.631, 0.738]
+raw/w5     everything kept, word 5-grams          736   0.9575   0.731  [0.681, 0.785]
+raw/c5     everything kept, char 5-grams         2849   0.8475   0.502  [0.452, 0.591]
+mask/w5    boilerplate off, ALL numbers maske     482   0.9371   0.771  [0.728, 0.835]
+canon/w3   boilerplate off, money canonical,      449   0.9366   0.763  [0.717, 0.832]
+canon/w5   boilerplate off, money canonical,      487   0.9845   0.803  [0.760, 0.857]  <== ADOPTED
+canon/w7   boilerplate off, money canonical,      505   0.9950   0.817  [0.774, 0.875]
+canon/w9   boilerplate off, money canonical,      520   0.9962   0.839  [0.799, 0.900]
+canon/c5   boilerplate off, money canonical,     2064   0.8679   0.735  [0.685, 0.792]
+
+SAME pair  N009205 (P005) / N009208 (P004)
+    title A: Widening and strengthening of the irrigation canal from Baran to Barabanki
+    title B: Widening and strengthening of the irrigation canal from Baran to Barabanki [SPC/2024-25/031782]
+    value  : 6340000 / 6340000      body chars: 5039 / 4216
+    J(raw,w5)=0.379   J(mask,w5)=0.803   J(canon,w5)=0.899   J(raw,c5)=0.530   J(canon,c5)=0.956
+DIFFERENT pair  N009445 (P001) / N009562 (P002)
+    title A: Repair and renovation of the government higher secondary school building at Chandrapur
+    title B: Desilting and lining of the 2 MLD sewage treatment plant at Chandrapur
+    value  : 163300000 / 35880000      body chars: 4663 / 5051
+    J(raw,w5)=0.445   J(mask,w5)=0.423   J(canon,w5)=0.308   J(raw,c5)=0.675   J(canon,c5)=0.616
+
+elapsed 27.7s

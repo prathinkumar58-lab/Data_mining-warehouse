@@ -1,0 +1,102 @@
+
+=== A. composite B-tree (band_no,bucket_key,notice_id) COVERING ===
+Nested Loop  (cost=0.43..27609.62 rows=6731 width=16) (actual time=0.194..459.359 rows=530538.00 loops=1)
+  Buffers: shared hit=132794, local hit=304
+  ->  Seq Scan on probe p  (cost=0.00..737.96 rows=43396 width=18) (actual time=0.008..6.676 rows=43396.00 loops=1)
+        Buffers: local hit=304
+  ->  Memoize  (cost=0.43..1.00 rows=1 width=18) (actual time=0.004..0.009 rows=12.23 loops=43396)
+        Cache Key: p.notice_id, p.band_no, p.bucket_key
+        Cache Mode: binary
+        Hits: 0  Misses: 43396  Evictions: 32154  Overflows: 0  Memory Usage: 8193kB
+        Buffers: shared hit=132794
+        ->  Index Only Scan using lsh_bucket_pkey on lsh_bucket b  (cost=0.42..0.99 rows=1 width=18) (actual time=0.003..0.005 rows=12.23 loops=43396)
+              Index Cond: ((band_no = p.band_no) AND (bucket_key = p.bucket_key))
+              Filter: (notice_id <> p.notice_id)
+              Rows Removed by Filter: 1
+              Heap Fetches: 0
+              Index Searches: 43396
+              Buffers: shared hit=132794
+Planning Time: 0.149 ms
+Execution Time: 485.178 ms
+
+=== B. same B-tree keys, NOT covering (notice_id in the heap) ===
+Nested Loop  (cost=0.43..33496.86 rows=7076 width=16) (actual time=0.185..542.136 rows=530538.00 loops=1)
+  Buffers: shared hit=294913, local hit=304
+  ->  Seq Scan on probe p  (cost=0.00..737.96 rows=43396 width=18) (actual time=0.010..5.161 rows=43396.00 loops=1)
+        Buffers: local hit=304
+  ->  Memoize  (cost=0.43..1.23 rows=1 width=18) (actual time=0.004..0.011 rows=12.23 loops=43396)
+        Cache Key: p.notice_id, p.band_no, p.bucket_key
+        Cache Mode: binary
+        Hits: 0  Misses: 43396  Evictions: 32154  Overflows: 0  Memory Usage: 8193kB
+        Buffers: shared hit=294913
+        ->  Index Scan using lsh_bucket_nc_idx on lsh_bucket_nc b  (cost=0.42..1.22 rows=1 width=18) (actual time=0.003..0.007 rows=12.23 loops=43396)
+              Index Cond: ((band_no = p.band_no) AND (bucket_key = p.bucket_key))
+              Filter: (notice_id <> p.notice_id)
+              Rows Removed by Filter: 1
+              Index Searches: 43396
+              Buffers: shared hit=294913
+Planning Time: 0.171 ms
+Execution Time: 578.306 ms
+
+=== C. hash index on bucket_key (single column, equality only) ===
+Nested Loop  (cost=0.01..28095.04 rows=6256 width=16) (actual time=0.179..539.481 rows=530538.00 loops=1)
+  Buffers: shared hit=228093, local hit=304
+  ->  Seq Scan on probe p  (cost=0.00..737.96 rows=43396 width=18) (actual time=0.008..5.726 rows=43396.00 loops=1)
+        Disabled: true
+        Buffers: local hit=304
+  ->  Memoize  (cost=0.01..1.02 rows=1 width=18) (actual time=0.003..0.011 rows=12.23 loops=43396)
+        Cache Key: p.notice_id, p.bucket_key, p.band_no
+        Cache Mode: binary
+        Hits: 0  Misses: 43396  Evictions: 30742  Overflows: 0  Memory Usage: 8193kB
+        Buffers: shared hit=228093
+        ->  Index Scan using lsh_bucket_hash_idx on lsh_bucket_hash b  (cost=0.00..1.01 rows=1 width=18) (actual time=0.002..0.007 rows=12.23 loops=43396)
+              Index Cond: (bucket_key = p.bucket_key)
+              Rows Removed by Index Recheck: 0
+              Filter: ((notice_id <> p.notice_id) AND (p.band_no = band_no))
+              Rows Removed by Filter: 1
+              Index Searches: 43396
+              Buffers: shared hit=228093
+Planning Time: 0.111 ms
+Execution Time: 564.118 ms
+
+=== D. GIN over BIGINT[] of the 76 band keys per notice ===
+Nested Loop  (cost=2.10..395585.53 rows=5207086 width=16) (actual time=0.032..700.934 rows=530538.00 loops=1)
+  Buffers: shared hit=490537, local hit=304
+  ->  Seq Scan on probe p  (cost=0.00..737.96 rows=43396 width=16) (actual time=0.008..5.967 rows=43396.00 loops=1)
+        Disabled: true
+        Buffers: local hit=304
+  ->  Bitmap Heap Scan on notice_bands nb  (cost=2.10..7.90 rows=120 width=640) (actual time=0.007..0.011 rows=12.23 loops=43396)
+        Recheck Cond: (keys && ARRAY[p.bucket_key])
+        Filter: (notice_id <> p.notice_id)
+        Rows Removed by Filter: 1
+        Heap Blocks: exact=316953
+        Buffers: shared hit=490537
+        ->  Bitmap Index Scan on notice_bands_gin  (cost=0.00..2.07 rows=120 width=0) (actual time=0.004..0.004 rows=13.23 loops=43396)
+              Index Cond: (keys && ARRAY[p.bucket_key])
+              Index Searches: 43396
+              Buffers: shared hit=173584
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.093 ms
+Execution Time: 722.352 ms
+
+=== E. no index at all -- sequential scan, forced ===
+Merge Join  (cost=128059.87..135307.49 rows=6731 width=16) (actual time=462.056..805.313 rows=530538.00 loops=1)
+  Merge Cond: ((b.bucket_key = p.bucket_key) AND (b.band_no = p.band_no))
+  Join Filter: (b.notice_id <> p.notice_id)
+  Rows Removed by Join Filter: 43396
+  Buffers: shared hit=188 read=5684, local hit=304, temp read=3797 written=3811
+  ->  Sort  (cost=123977.95..126257.95 rows=912000 width=18) (actual time=450.926..591.732 rows=911990.00 loops=1)
+        Sort Key: b.bucket_key, b.band_no
+        Sort Method: external merge  Disk: 30376kB
+        Buffers: shared hit=188 read=5684, temp read=3797 written=3811
+        ->  Seq Scan on lsh_bucket b  (cost=0.00..14992.00 rows=912000 width=18) (actual time=0.235..107.288 rows=912000.00 loops=1)
+              Buffers: shared hit=188 read=5684
+  ->  Sort  (cost=4080.60..4189.09 rows=43396 width=18) (actual time=11.081..40.129 rows=573933.00 loops=1)
+        Sort Key: p.bucket_key, p.band_no
+        Sort Method: quicksort  Memory: 3232kB
+        Buffers: local hit=304
+        ->  Seq Scan on probe p  (cost=0.00..737.96 rows=43396 width=18) (actual time=0.083..2.660 rows=43396.00 loops=1)
+              Buffers: local hit=304
+Planning Time: 0.177 ms
+Execution Time: 836.446 ms

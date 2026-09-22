@@ -1,0 +1,81 @@
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:12:46] emissions 5,464,739; top 0.1% of buckets -> 71.7% of work; largest bucket 1320
+[15:12:46] worst bucket: band 41, 1320 members, emits 870,540 pairs, mean pairwise J 0.266, 0.190% of them above tau
+[15:12:48] cap= 400 emissions    3,106,199 (-43.2%)  labelled recall 1.0000  unbiased recall 0.99800
+[15:12:49] cap= 200 emissions    2,410,378 (-55.9%)  labelled recall 1.0000  unbiased recall 0.99800
+[15:12:49] cap= 100 emissions    1,730,345 (-68.3%)  labelled recall 1.0000  unbiased recall 0.99600
+[15:12:50] cap=  50 emissions    1,170,777 (-78.6%)  labelled recall 1.0000  unbiased recall 0.98498
+[15:12:50] cap=  25 emissions      860,334 (-84.3%)  labelled recall 0.9955  unbiased recall 0.97197
+C:\Users\cbsen\Desktop\dmw\q2\src\common.py:487: RuntimeWarning: overflow encountered in scalar multiply
+  acc = np.full(N, U64(j + 1) * _GOLD, dtype=U64)
+[15:12:52] df_stop=0.20 |S|=250 emissions      419,595 (-92.3%)  AUC 0.9986  R@FP0 0.900  tau 0.253
+[15:12:53] df_stop=0.10 |S|=201 emissions      450,917 (-91.7%)  AUC 0.9960  R@FP0 0.832  tau 0.329
+[15:12:54] df_stop=0.05 |S|=141 emissions      384,265 (-93.0%)  AUC 0.9953  R@FP0 0.821  tau 0.355
+[15:12:55] df_stop=0.02 |S|=133 emissions      423,496 (-92.3%)  AUC 1.0000  R@FP0 0.993  tau 0.108
+[15:12:56] wrote figures/e_work_distribution.png
+[15:12:56] wrote figures/e_mitigation_price.png
+[15:12:56] wrote figures/e_before_after.png
+[15:12:56] wrote figures/e_growth_projection.png
+[15:12:56] wrote figures/e_portal_attribution.png
+[15:12:56] wrote C:\Users\cbsen\Desktop\dmw\q2\results\e_skew.json
+
+====================================================================================================
+PART (e) SUMMARY
+====================================================================================================
+full-corpus retrieval at b=76 r=5: 5,464,739 candidate pairs from 147,944 colliding buckets
+per notice: mean 911, median 709, p99 3057, max 4409
+
+concentration:
+   top_0.1%_buckets          147 buckets ->  71.7% of all emitted pairs
+   top_0.5%_buckets          739 buckets ->  83.5% of all emitted pairs
+   top_1.0%_buckets         1479 buckets ->  86.6% of all emitted pairs
+   top_5.0%_buckets         7397 buckets ->  91.1% of all emitted pairs
+   top_10.0%_buckets       14794 buckets ->  93.2% of all emitted pairs
+   top_1%_notices                      ->   3.8% of all emitted pairs
+   top_2%_notices                      ->   6.9% of all emitted pairs
+   top_5%_notices                      ->  15.2% of all emitted pairs
+   top_10%_notices                     ->  26.5% of all emitted pairs
+
+worst single bucket: band 41, 1320 members, emits 870,540 pairs = 15.9% of the entire corpus's candidate work
+   mean pairwise Jaccard inside it 0.266; only 0.190% of its pairs are above tau (~1652 real duplicates for 870,540 comparisons)
+   portals inside it: {'P094': 178, 'P006': 89, 'P001': 80, 'P005': 79, 'P002': 77, 'P004': 72, 'P003': 67, 'P240': 52}
+
+against the budget: 5,464,739 candidate pairs x 3.12 us (0.67 us to emit the row from the index + 2.46 us to score it) = 17 s for a full rebuild; a night's intake costs ~2 s
+   (budget is 1200 s; the worst bucket alone is 2.7 s)
+
+growth projection (4,000 notices/week):
+   corpus all-pairs (hours)     uncapped pairs     uncapped s     capped pairs     capped s
+-------------------------------------------------------------------------------------------
+   12,000              0.3          5,464,739             17        1,730,345            5
+   25,000              1.4         23,718,485             74        3,604,885           11
+   50,000              5.7         94,873,940            296        7,209,770           22
+  100,000             22.7        379,495,763           1186       14,419,541           45
+  220,000            110.0      1,836,759,497           5740       31,722,991           99
+   budget = 1200 s. Uncapped breaches it at roughly 100,586 notices; capped does not breach it inside the projection.
+
+M1 -- document-frequency stop-list (attacks the cause, moves the representation):
+   df_stop   mean|S|      emissions   largest      AUC    R@FP0      tau    delta   K needed
+--------------------------------------------------------------------------------------------
+      None       492      5,464,739      1320   0.9845    0.803   0.5419   0.0905        290
+       0.2       251        419,595        49   0.9986    0.900   0.2532   0.0566        564
+       0.1       202        450,917       123   0.9960    0.832   0.3290   0.0965        227
+      0.05       142        384,265       146   0.9953    0.821   0.3550   0.0727        414
+      0.02       133        423,496         9   1.0000    0.993   0.1081   0.0615        244
+   'K needed' is the signature size part (b)'s argument demands at that threshold. K=384 was sized for tau=0.54.
+
+M2 -- bucket cap (attacks the symptom, moves nothing else):
+   cap      emissions   largest p99/notice        labelled recall        unbiased recall
+----------------------------------------------------------------------------------------
+  None      5,464,739      1320       3057        1.00000 (224/224)       0.99900 (999/999)
+   400      3,106,199       385       1325        1.00000 (224/224)       0.99800 (997/999)
+   200      2,410,378       198        942        1.00000 (224/224)       0.99800 (997/999)
+   100      1,730,345       100        678        1.00000 (224/224)       0.99600 (995/999)  <== adopted
+    50      1,170,777        50        491        1.00000 (224/224)       0.98498 (984/999)
+    25        860,334        25        423        0.99554 (223/224)       0.97197 (971/999)
+
+ADOPTED: bucket cap at 100, applied at index time
+  price: emissions fall 68.3% (5,464,739 -> 1,730,345) and the largest bucket falls from 1320 to 100; the measured cost is 0 of 224 labelled duplicates above tau and 4 of 999 unbiased pairs above tau.
+  after: per notice mean 288 (was 911), p99 678 (was 3057), max 1026 (was 4409)
+  full-rebuild sketch scoring 17 s -> 5 s; nightly 2 s -> 0 s
+elapsed 14.4s
